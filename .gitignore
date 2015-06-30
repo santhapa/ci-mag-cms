@@ -14,3 +14,6 @@ application/config/database.php
 #composer vendor dependencies
 vendor
 composer.lock
+
+#npm packages
+node_modules
