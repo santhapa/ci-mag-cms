@@ -1,9 +1,15 @@
-#Action application/x-hg-php53 /cgi-sys/php53
-#AddType application/x-httpd-php53 .php
-
+#Initialize mod_rewrite
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+# Put your installation directory here:
+# If your URL is www.example.com/, use /
+# If your URL is www.example.com/site_folder/, use /site_folder/
+RewriteBase /ci/mag/
 
-RewriteCond $1 !^(index\.php|robots\.txt|blog|assets|test\.php)
-RewriteRule ^(.*) index.php/$1 [L]
+# Do not enable rewriting for files or directories that exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#For reuests that are not actual files or directories,
+#Rewrite to index.php/URL
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]

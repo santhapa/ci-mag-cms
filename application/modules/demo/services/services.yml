@@ -1,4 +1,4 @@
 services:
     blog.post_manager:
-        class: blog\manager\PostManager
+        class: demo\manager\PostManager
         arguments: ["%entityManager%"]

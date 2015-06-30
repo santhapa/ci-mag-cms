@@ -1,9 +1,9 @@
 <?php
 
-namespace blog\manager;
+namespace demo\manager;
 
 use Doctrine\ORM\EntityManager;
-use blog\models\Post;
+use demo\models\Post;
 
 class PostManager{
 
@@ -41,7 +41,7 @@ class PostManager{
 		if($array)
 		{
 			return $this->em
-               ->getRepository('\blog\models\Post')
+               ->getRepository('\demo\models\Post')
                ->createQueryBuilder('p')
                ->select('p')
                ->where('p.id = :post')
@@ -49,7 +49,7 @@ class PostManager{
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
-		return $this->em->getRepository("\blog\models\Post")->findOneBy(array('id'=>$id));
+		return $this->em->getRepository("\demo\models\Post")->findOneBy(array('id'=>$id));
 	}
 
 	public function getPosts($array = false)
@@ -57,13 +57,13 @@ class PostManager{
 		if($array)
 		{
 			return $this->em
-               ->getRepository('\blog\models\Post')
+               ->getRepository('\demo\models\Post')
                ->createQueryBuilder('p')
                ->select('p')
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
 
-		return $this->em->getRepository("\blog\models\Post")->findAll();
+		return $this->em->getRepository("\demo\models\Post")->findAll();
 	}
 }
