@@ -1,0 +1,20 @@
+{
+  "name": "mag",
+  "version": "1.0.0",
+  "homepage": "https://github.com/santhapa/ci-mag-cms",
+  "description": "Magazine cms with CodeIgniter",
+  "authors": [
+    "Sanjip Thapa"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": "~2.1.2"
+  }
+}
