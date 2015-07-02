@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  * @version         3.0.0
  */
-abstract class REST_Controller extends CI_Controller {
+abstract class REST_Controller extends MX_Controller {
     /**
      * This defines the rest format.
      * Must be overridden it in a controller so that it is set.
