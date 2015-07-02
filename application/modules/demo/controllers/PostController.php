@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class Post_Controller extends MX_Controller {
+class PostController extends MX_Controller {
 
 	/**
 	 * Index Page for this controller.

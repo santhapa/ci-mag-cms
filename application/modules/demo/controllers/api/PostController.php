@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Post_Controller extends REST_Controller {
+class PostController extends REST_Controller {
 
     function __construct()
     {

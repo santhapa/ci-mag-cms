@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Key_Controller extends REST_Controller {
+class KeyController extends REST_Controller {
 
     protected $methods = [
             'index_put' => ['level' => 10, 'limit' => 10],

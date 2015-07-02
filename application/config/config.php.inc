@@ -470,4 +470,4 @@ $config['proxy_ips'] = '';
 // $config['composer_autoload'] = true;
 $config['composer_autoload'] = APPPATH.'../vendor/autoload.php';
 /*HMVC CONFIGS*/
-$config['controller_suffix'] = '_Controller';
+$config['controller_suffix'] = 'Controller';
