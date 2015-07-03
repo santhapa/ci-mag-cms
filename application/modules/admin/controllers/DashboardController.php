@@ -5,7 +5,7 @@ class DashboardController extends Backend_Controller {
 
 	public function setModulePath()
 	{
-		return "dashboard/backend/";
+		return "admin/";
 	}
 
 	public function index()
