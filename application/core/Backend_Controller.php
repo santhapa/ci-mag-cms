@@ -12,7 +12,14 @@ abstract class Backend_Controller extends MY_Controller {
 
 		//load session and breadcrumb library for the backend panel
 		$this->load->library('session');
-		// $this->load->library('breadcrumb');
+
+		// load helper class
+		$this->load->helper('ui_helper');
+
+		//common template data
+		$this->templateData['pageTitle'] = "";
+		$this->templateData['pageTitleSuffix'] = "Dashboard";
+
 	}
 
 	//force module controller extending this class to return the module path
