@@ -17,6 +17,7 @@ abstract class Backend_Controller extends MY_Controller {
 		$this->load->helper('ui_helper');
 
 		//common template data
+		$this->templateData['modulePath'] = $this->getModulePath();
 		$this->templateData['pageTitle'] = "";
 		$this->templateData['pageTitleSuffix'] = "Dashboard";
 

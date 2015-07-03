@@ -10,7 +10,7 @@ class DashboardController extends Backend_Controller {
 
 	public function index()
 	{
-		$this->templateData['content'] = $this->getModulePath().'index';
+		$this->templateData['content'] = 'index';
 		$this->load->view('backend/main_layout', $this->templateData);
 	}
 }
