@@ -1,3 +1,4 @@
 <?php
 
-$route['dashboard'] = 'admin/Dashboard/index';
+$route['admin/login'] = 'admin/dashboard/login';
+$route['admin/logout'] = 'admin/dashboard/logout';

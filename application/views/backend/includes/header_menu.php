@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>MAG</b></span>
+        <span class="logo-mini"><?=$projectName_short; ?></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Magazine</b> CMS</span>
+        <span class="logo-lg"><?=$projectName; ?></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
