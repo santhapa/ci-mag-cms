@@ -9,10 +9,10 @@ use Doctrine\Common\ClassLoader,
     Doctrine\Common\Annotations\AnnotationReader,
     Doctrine\ORM\Mapping\Driver\AnnotationDriver,
     Doctrine\DBAL\Logging\EchoSQLLogger,
-    Doctrine\Common\EventManager,
-    Gedmo\Timestampable\TimestampableListener,
-    Gedmo\Sluggable\SluggableListener,
-    Gedmo\Tree\TreeListener;
+    Doctrine\Common\EventManager;
+
+use Gedmo\Timestampable\TimestampableListener,
+    Gedmo\Sluggable\SluggableListener;
 
 class Doctrine {
 
@@ -23,40 +23,22 @@ class Doctrine {
         // load database configuration from CodeIgniter
         require_once APPPATH.'config/database.php';
 
-        // Set up class loading. You could use different autoloaders, provided by your favorite framework,
-        // if you want to.
-        //require_once APPPATH.'libraries/Doctrine/Common/ClassLoader.php';
-
-        // We use the Composer Autoloader instead - just set
-        // $config['composer_autoload'] = TRUE; in application/config/config.php
-        //require_once APPPATH.'vendor/autoload.php';
 
         //A Doctrine Autoloader is needed to load the models
         // first argument of classloader is namespace and second argument is path
-
-        // setup class loading
-        $entitiesClassLoader = new ClassLoader('models', APPPATH);
-        $entitiesClassLoader->register();
+        // setup models/entity namespace
+        $entityLoader = new ClassLoader('models', APPPATH);
+        $entityLoader->register();
 
         foreach (glob(APPPATH.'modules/*', GLOB_ONLYDIR) as $m) {
             $module = str_replace(APPPATH.'modules/', '', $m);
-            $entitiesClassLoader = new ClassLoader($module, APPPATH.'modules');
-            $entitiesClassLoader->register();
+            $entityLoader = new ClassLoader($module, APPPATH.'modules');
+            $entityLoader->register();
         }
+        //Register proxies namespace
+        $proxyLoader = new ClassLoader('Proxies', APPPATH.'Proxies');
+        $proxyLoader->register();
 
-        $loader = new ClassLoader('Proxies', APPPATH.'Proxies');
-        $loader->register();
-
-        // Set up Gedmo
-        // $classLoader = new ClassLoader('Gedmo', APPPATH.'third_party');
-        // $classLoader->register();
-        // $evm = new EventManager;
-        // // timestampable
-        // $evm->addEventSubscriber(new TimestampableListener);
-        // // sluggable
-        // $evm->addEventSubscriber(new SluggableListener);
-        // // tree
-        // $evm->addEventSubscriber(new TreeListener);  
 
         // Set up caches
         $config = new Configuration;
@@ -66,14 +48,40 @@ class Doctrine {
         $config->setMetadataDriverImpl($driverImpl);
         $config->setQueryCacheImpl($cache);
 
-        // Set up models
+        // Set up entity
         $reader = new AnnotationReader($cache);
-        // $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
         $models = array(APPPATH.'models');
         foreach (glob(APPPATH.'modules/*/models', GLOB_ONLYDIR) as $m)
             array_push($models, $m);
         $driver = new AnnotationDriver($reader, $models);
         $config->setMetadataDriverImpl($driver);
+
+        // Setup Gedmo
+        $cachedAnnotationReader = new Doctrine\Common\Annotations\CachedReader(
+            $reader, // use reader
+            $cache // and a cache driver
+        );
+
+        // create a driver chain for metadata reading
+        $driverChain = new Doctrine\ORM\Mapping\Driver\DriverChain();
+        
+        // load superclass metadata mapping only, into driver chain
+        // also registers Gedmo annotations.NOTE: you can personalize it
+        Gedmo\DoctrineExtensions::registerAbstractMappingIntoDriverChainORM(
+            $driverChain, // our metadata driver chain, to hook into
+            $cachedAnnotationReader // our cached annotation reader
+        );
+
+        $event = new EventManager;
+        
+        $timestampableListener = new TimestampableListener;
+        $timestampableListener->setAnnotationReader($cachedAnnotationReader);
+        $event->addEventSubscriber($timestampableListener);
+
+        $slugListener = new SluggableListener;
+        $slugListener->setAnnotationReader($cachedAnnotationReader);
+        $event->addEventSubscriber($slugListener);
+
 
         // Proxy configuration
         $config->setProxyDir(APPPATH.'/proxies');
@@ -95,6 +103,6 @@ class Doctrine {
         );
 
         // Create EntityManager
-        $this->em = EntityManager::create($connectionOptions, $config);
+        $this->em = EntityManager::create($connectionOptions, $config, $event);
     }
 }
