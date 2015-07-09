@@ -10,6 +10,7 @@ define('APPPATH', 'application/');
 define('EXT', '.php');
 
 require_once APPPATH."libraries/Doctrine.php";
+require_once APPPATH."commands/DataFixturesCommand.php";
 
 $doctrine = new Doctrine();
 
@@ -43,6 +44,9 @@ $cli->addCommands(array(
 	    new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
 	    new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
 	    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
+
+	    //fixture command
+	    new \commands\DataFixturesCommand($doctrine->em),
 ));
 
 $cli->run();
