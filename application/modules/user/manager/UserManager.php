@@ -3,7 +3,7 @@
 namespace user\manager;
 
 use Doctrine\ORM\EntityManager;
-use demo\models\Post;
+use user\models\User;
 
 class UserManager{
 
@@ -14,56 +14,88 @@ class UserManager{
 		$this->em = $em;
 	}
 
-	public function createPost()
+	public function createUser()
 	{
-		return new Post();
+		return new User();
 	}
 
-	public function updatePost(Post $post, $flush=true)
+	public function updateUser(User $user, $flush=true)
 	{
-		$this->em->persist($post);
+		$this->em->persist($user);
 		if($flush)
 		{
 			$this->em->flush();
 		}
 	}
 
-	public function removePost(Post $post)
+	public function removeUser(User $user)
 	{
-		$this->em->remove($post);
+		$this->em->remove($user);
 		$this->em->flush();
 
 		return;
 	}
 
-	public function getPostById($id, $array=false)
+	public function getUserById($id, $array=false)
 	{
 		if($array)
 		{
 			return $this->em
-               ->getRepository('\demo\models\Post')
-               ->createQueryBuilder('p')
-               ->select('p')
-               ->where('p.id = :post')
-               ->setParameter('post', $id)
+               ->getRepository('\user\models\User')
+               ->createQueryBuilder('u')
+               ->select('u')
+               ->where('u.id = :user')
+               ->setParameter('user', $id)
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
-		return $this->em->getRepository("\demo\models\Post")->findOneBy(array('id'=>$id));
+		return $this->em->getRepository("\user\models\User")->findOneBy(array('id'=>$id));
 	}
 
-	public function getPosts($array = false)
+	public function getUsers($array = false)
 	{
 		if($array)
 		{
 			return $this->em
-               ->getRepository('\demo\models\Post')
-               ->createQueryBuilder('p')
-               ->select('p')
+               ->getRepository('\user\models\User')
+               ->createQueryBuilder('u')
+               ->select('u')
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
 
-		return $this->em->getRepository("\demo\models\Post")->findAll();
+		return $this->em->getRepository("user\models\User")->findAll();
+	}
+
+	public function getUserByUsername($username, $array=false)
+	{
+		if($array)
+		{
+			return $this->em
+               ->getRepository('\user\models\User')
+               ->createQueryBuilder('u')
+               ->select('u')
+               ->where('u.username = :user')
+               ->setParameter('user', $username)
+               ->getQuery()
+               ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+		}
+		return $this->em->getRepository("\user\models\User")->findOneBy(array('username'=>$username));
+	}
+
+	public function getUserByEmail($email, $array=false)
+	{
+		if($array)
+		{
+			return $this->em
+               ->getRepository('\user\models\User')
+               ->createQueryBuilder('u')
+               ->select('u')
+               ->where('u.email = :user')
+               ->setParameter('user', $email)
+               ->getQuery()
+               ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+		}
+		return $this->em->getRepository("\user\models\User")->findOneBy(array('email'=>$email));
 	}
 }

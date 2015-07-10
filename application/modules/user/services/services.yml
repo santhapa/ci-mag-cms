@@ -1,0 +1,15 @@
+services:
+    user.user_manager:
+        class: user\manager\UserManager
+        arguments: ["%entityManager%"]
+
+    user.group_manager:
+        class: user\manager\GroupManager
+        arguments: ["%entityManager%"]
+
+    user.permission_manager:
+        class: user\manager\PermissionManager
+        arguments: ["%entityManager%"]
+
+    user.rule_manager:
+        class: user\manager\ValidationRuleManager
