@@ -2,5 +2,7 @@
 
 /* load the MX_Loader class */
 require APPPATH."third_party/MX/Controller.php";
+//load the mailer class to send mails
+require APPPATH."third_party/Mailer/Mailer.php";
 
 class MY_Controller extends MX_Controller {}

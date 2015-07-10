@@ -10,7 +10,10 @@
 		"doctrine/migrations": "1.0.x-dev",
 		"symfony/dependency-injection": "2.7.1",
 		"symfony/config": "2.7.1",
-		"symfony/yaml": "2.7.1"
+		"symfony/yaml": "2.7.1",
+		"doctrine/data-fixtures": "1.1.1",
+		"ircmaxell/password-compat": "1.0.4",
+		"swiftmailer/swiftmailer": "5.4.1"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"
