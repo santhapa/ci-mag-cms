@@ -7,4 +7,9 @@ class Api_Controller extends REST_Controller
 	
 }
 
+class PublicApi_Controller extends REST_Controller
+{
+	
+}
+
 ?>

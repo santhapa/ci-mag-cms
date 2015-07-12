@@ -44,17 +44,21 @@ class UserController extends Backend_Controller {
 				$user->setGroup($group);
 				$user->setStatus(0);
 
+				//set token for user to confirm registration process
+				$token = md5(sha1($this->input->post('username')));
+				$user->setToken($token);
+
 				$userManager->updateUser($user);
 
 				$mailerManager = $this->container->get('mailer_manager');
 
-				$from['from_name'] = 'Sanjip Thapa';
+				$from['from_name'] = 'Magazine CMS';
 				$from['from_email'] = 'magcms@gmail.com';
 				$to['to_name'] = $this->input->post('username');
 				$to['to_email'] = $this->input->post('email');
 
 				$subject = "Confirm your account!";
-				$message = "Your account has been created at Magazine CMS. Please confirm your account.";
+				$message = "<h2>Welcome! {$user->getUsername()}</h2> <p>Your account has been created at Magazine CMS but needs approval before you can continue.</p> <p>Please confirm your account by clicking the link below.</p><p><a href='".site_url('user/confirm')."?token={$token}{$user->getId()}&username={$user->getUsername()}'>".site_url('user/confirm')."?token={$token}{$user->getId()}&username={$user->getUsername()}</a></p>";
 
 				$mailerManager->sendMail($from, $to, $subject, $message);
 

@@ -14,6 +14,10 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
+            <?php echo ($this->session->flashdata('feedback')) ? $this->session->flashdata('feedback') : ''; ?>
+            <?php echo ($this->session->flashdata('welcome')) ? $this->session->flashdata('welcome') : ''; 
+            
+            ?>
             <section class="content-header">
                 <h1>
                     Dashboard

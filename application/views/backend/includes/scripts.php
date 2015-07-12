@@ -50,3 +50,6 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="<?=base_url()?>/bower_components/admin-lte/dist/js/demo.js" type="text/javascript"></script>
+
+<!-- Custom Js -->
+<script src="<?=base_url()?>/assets/templates/common/js/custom.js" type="text/javascript"></script>

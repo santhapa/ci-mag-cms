@@ -116,6 +116,11 @@ class User
     protected $image;
 
     /**
+    * @ORM\Column(type="string", length=255, nullable=true)
+    */
+    protected $token;
+
+    /**
      * @ORM\ManyToOne(targetEntity="user\models\Group", inversedBy="users")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
     **/
@@ -309,6 +314,16 @@ class User
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
     }
 
     public function setGroup(Group $group)
