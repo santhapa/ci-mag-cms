@@ -1,11 +1,11 @@
 <!-- Bootstrap 3.3.4 -->
 <link href="<?=base_url()?>/bower_components/admin-lte/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
 
-<!-- FontAwesome 4.3.0 -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!-- FontAwesome 4.4.0 -->
+<link href="<?=base_url()?>/bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Ionicons 2.0.0 -->
-<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />    
+<link href="<?=base_url()?>/bower_components/ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />    
 
 <!-- Theme style -->
 <link href="<?=base_url()?>/bower_components/admin-lte/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -15,6 +15,9 @@
 
 <!-- iCheck -->
 <link href="<?=base_url()?>/bower_components/admin-lte/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+
+<?php /*
+//commented css plugins for now
 
 <!-- Morris chart -->
 <link href="<?=base_url()?>/bower_components/admin-lte/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
@@ -30,6 +33,8 @@
 
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?=base_url()?>/bower_components/admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+*/
+?> 
 
 <!-- Custom css -->
 <link href="<?=base_url()?>/assets/templates/common/css/custom.css" rel="stylesheet" type="text/css" />

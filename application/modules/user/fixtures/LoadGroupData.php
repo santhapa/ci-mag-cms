@@ -15,7 +15,9 @@ class LoadGroupData extends AbstractFixture
     	$groups = array(
 			array("name"=>"Super Admin", "slug"=>"super_admin"),
 			array("name"=>"Admin", "slug"=>"admin"),
-			array("name"=>"General User", "slug"=>"general_user"),
+			array("name"=>"Editor", "slug"=>"editor"),
+			array("name"=>"Author", "slug"=>"author"),
+			array("name"=>"Subscriber", "slug"=>"subscriber"),
 		);
 		foreach ($groups as $grp) {
 			$group = new Group();

@@ -2,68 +2,50 @@
 
 class UserController extends Api_Controller{
 
-	function __construct()
+	public function __construct()
     {
         // Construct the parent class
         parent::__construct();
     }
 
-    function post_get()
+    public function new_get()
     {
-        $id = $this->get('id');
-        if(!$id)    $this->response(NULL, 400);
+        $form = $this->load->view('user/api/new_form','', true);
 
-        $postManager = $this->container->get('blog.post_manager');
-        $post = $postManager->getPostById($id, true);
-
-        if ($post)
+        if ($form)
         {
-            $this->response($post, 200); // 200 being the HTTP response code
+            $this->response($form, 200); // 200 being the HTTP response code
         }
 
         else
         {
-            $this->response(['error' => 'Post could not be found!'], 404);
+            $this->response(['error' => 'Form not found!'], 404);
         }
     }
 
-    function all_get()
+    public function new_post()
     {
-        $postManager = $this->container->get('blog.post_manager');
+        $posts = $this->input->post();
+        $this->form_validation->set_rules($ruleManager->getRules(array('username', 'password', 'confPassword', 'email', 'group')));
 
-        $posts = $postManager->getPosts(true);
+        // if(!$this->post('title'))
+        // {
+        //    return  $this->response(['error' => 'Title for the post is not found!'], 404);
+        // }
 
-        if ($posts)
-        {
-            $this->response($posts, 200); // 200 being the HTTP response code
-        }
+        // $postManager = $this->container->get('blog.post_manager');
+        // $post = $postManager->createPost();
 
-        else
-        {
-            $this->response(['error' => 'No post found!'], 404);
-        }
+        // $post->setTitle($this->post('title'));
+
+        // $postManager->updatePost($post);
+
+        // $message = [
+        //     'id' => $post->getId(),
+        //     'action'=> 'Created the post'
+        // ];
+
+        $this->response($posts, 201); // 201 being the HTTP response code
     }
 
-
-    function new_post()
-    {
-        if(!$this->post('title'))
-        {
-           return  $this->response(['error' => 'Title for the post is not found!'], 404);
-        }
-
-        $postManager = $this->container->get('blog.post_manager');
-        $post = $postManager->createPost();
-
-        $post->setTitle($this->post('title'));
-
-        $postManager->updatePost($post);
-
-        $message = [
-            'id' => $post->getId(),
-            'action'=> 'Created the post'
-        ];
-
-        $this->response($message, 201); // 201 being the HTTP response code
-    }
 }

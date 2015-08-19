@@ -43,7 +43,7 @@ class UserController extends Backend_Controller {
 				$group = $this->container->get('user.group_manager')->getGroupById($this->input->post('group'));
 				$user->setGroup($group);
 				$user->setStatus(0);
-
+				
 				//set token for user to confirm registration process
 				$token = md5(sha1($this->input->post('username')));
 				$user->setToken($token);
