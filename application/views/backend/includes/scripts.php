@@ -15,6 +15,8 @@
 <!-- Jquery Validator -->
 <script src="<?=base_url()?>/bower_components/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>    
 
+<!-- Noty Jquery notification plugin -->
+<script src="<?=base_url()?>/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 
 <?php 
 //comments js plugins

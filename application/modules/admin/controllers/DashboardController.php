@@ -43,7 +43,7 @@ class DashboardController extends Backend_Controller {
 
 					if(password_verify($password, $user->getPassword()))
 					{
-						$this->session->setFlashMessage('welcome', "Welcome! {$user->getUsername()}. Enjoy your session.", 'info');
+						$this->session->setFlashMessage('temp', "Welcome! {$user->getUsername()}. Enjoy your session.", 'info');
 						redirect(site_url('admin/dashboard'));
 					}
 					$this->session->setFlashMessage('feedback', 'Invalid password.', 'error');

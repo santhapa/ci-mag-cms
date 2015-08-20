@@ -15,13 +15,17 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <?php echo ($this->session->flashdata('feedback')) ? $this->session->flashdata('feedback') : ''; ?>
-            <?php echo ($this->session->flashdata('welcome')) ? $this->session->flashdata('welcome') : ''; 
-            
+            <?php //echo ($this->session->flashdata('temp')) ? $this->session->flashdata('temp') : ''; ?>
+
+            <?php 
+                if($this->session->flashdata('temp')){
+                    $msg = $this->session->flashdata('temp');
+                    echo "<script>window.onload = function(){welcomeUserNoty('{$msg}');}</script>";
+                }
             ?>
             <section class="content-header">
                 <h1>
-                    Dashboard
-                    <small>Control panel</small>
+                    <?=($pageTitle)? $pageTitle : ''; ?>
                 </h1>
                 <?php echo $this->breadcrumbs->show(); ?>
                <!--  <ol class="breadcrumb">

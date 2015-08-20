@@ -8,11 +8,15 @@ $(document).ready(function(){
 
 });
 
-function tempAlert(msg, duration){
-	var el = document.createElement("div");
-	el.innerHTML = msg;
-	setTimeout(function(){
-		el.parentNode.removeChild(el);
-	},duration);
-	document.body.appendChild(el);
+
+function welcomeUserNoty(msg) {
+  	var s = noty({
+  		text: msg,
+  		type: 'info',
+      	dismissQueue: true,
+  		layout: 'topRight',
+  		theme: 'defaulTheme',
+  		timeout: 4000,
+  		closeWith:['button']
+  	});
 }
