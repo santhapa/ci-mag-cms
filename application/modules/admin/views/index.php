@@ -10,14 +10,6 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <h3>Welcome to Dashboard!</h3>
-                    <?=$this->session->userId; ?>
-                    <?php
-                        if(\App::isSuperUser())
-                        {
-                            echo "yess I am Super.";
-                        }
-                        echo \App::user()->getUsername();
-                     ?>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->

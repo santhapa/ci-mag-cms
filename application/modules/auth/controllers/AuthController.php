@@ -3,11 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class AuthController extends Frontend_Controller {
 
-	public function setModulePath()
-	{
-		return "auth/";
-	}
-
 	public function login()
 	{
 		if($this->input->post())
