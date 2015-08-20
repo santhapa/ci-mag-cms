@@ -10,6 +10,8 @@ class UserController extends Backend_Controller {
 
 		$this->load->helper('user');
 		$this->load->library('form_validation');
+
+		$this->breadcrumbs->push('Users', site_url('admin/user'));
 	}
 
 	public function setModulePath()
@@ -19,8 +21,14 @@ class UserController extends Backend_Controller {
 
 	public function index()
 	{	
-		$this->breadcrumbs->push('User', 'admin/user');
-		$this->templateData['content'] = 'index';
+		$userManager = $this->container->get('user.user_manager');
+
+		$users = $userManager->getUsers();
+
+		
+		$this->templateData['users'] = $users;
+		$this->templateData['pageTitle'] = 'Users';
+		$this->templateData['content'] = 'user/index';
 		$this->load->view('backend/main_layout', $this->templateData);
 	}
 
@@ -32,16 +40,18 @@ class UserController extends Backend_Controller {
 			$ruleManager = $this->container->get('user.rule_manager');
 			$user = $userManager->createUser();
 
-			$this->form_validation->set_rules($ruleManager->getRules(array('username', 'password', 'confPassword', 'email', 'group')));
+			$this->form_validation->set_rules($ruleManager->getRules(array('username', 'password', 'confPassword', 'firstname', 'lastname', 'email', 'group')));
 
 			if($this->form_validation->run($this))
 			{
 				$user->setUsername($this->input->post('username'));
 				$user->setPassword(password_hash($this->input->post('password'), PASSWORD_BCRYPT));
+				$user->setFirstname($this->input->post('firstname'));
+				$user->setLastname($this->input->post('lastname'));
 				$user->setEmail($this->input->post('email'));
+				
 				$group = $this->container->get('user.group_manager')->getGroupById($this->input->post('group'));
 				$user->setGroup($group);
-				$user->setStatus(0);
 				
 				//set token for user to confirm registration process
 				$token = md5(sha1($this->input->post('username')));
@@ -61,15 +71,12 @@ class UserController extends Backend_Controller {
 
 				$mailerManager->sendMail($from, $to, $subject, $message);
 
+				$this->session->setFlashMessage('feedback', "User ({$user->getUsername()}) has been created.", 'success');
 				redirect(site_url('admin/user'));
-			}else{
-				// echo validation_errors();
-				// exit;
 			}
 		}
 
-		$this->breadcrumbs->push('User', 'admin/user');
-		$this->breadcrumbs->push('New', 'admin/user/add');
+		$this->breadcrumbs->push('New', current_url());
 		$this->templateData['pageTitle'] = 'Add User';
 		$this->templateData['content'] = 'user/new';
 		$this->load->view('backend/main_layout', $this->templateData);
