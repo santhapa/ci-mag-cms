@@ -12,6 +12,18 @@ use user\models\Group;
  */
 class User
 {
+    const STATUS_PENDING = 1;
+    const STATUS_ACTIVE = 2;
+    const STATUS_BLOCK = 3;
+    const STATUS_TRASH = 4;
+
+    public static $status_types = array(
+        self::STATUS_PENDING => 'Pending',
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_BLOCK =>'Block',
+        self::STATUS_TRASH =>'Trash',
+    );
+
 	/**
     * @ORM\Column(type="integer")
     * @ORM\Id
@@ -22,17 +34,17 @@ class User
     // required information - login details
 
     /**
-    * @ORM\Column(type="string", unique=true)
+    * @ORM\Column(type="string", unique=true, nullable=false)
     */
     protected $username;
 
     /**
-    * @ORM\Column(type="string")
+    * @ORM\Column(type="string", nullable=false)
     */
     protected $password;
 
     /**
-    * @ORM\Column(type="string", unique=true)
+    * @ORM\Column(type="string", unique=true, nullable=false)
     */
     protected $email;
 
@@ -43,19 +55,19 @@ class User
     protected $createdAt;
 
     /**
-    * @ORM\Column(type="boolean")
+    * @ORM\Column(type="integer", nullable=false)
     */
-    protected $status;
+    protected $status=1;
 
     //personal informations
 
     /**
-    * @ORM\Column(name="firstname", type="string", length=100, nullable=true)
+    * @ORM\Column(name="firstname", type="string", length=100, nullable=false)
     */
     protected $firstname;
 
     /**
-    * @ORM\Column(name="lastname", type="string", length=100, nullable=true)
+    * @ORM\Column(name="lastname", type="string", length=100, nullable=false)
     */
     protected $lastname;
 
@@ -181,6 +193,31 @@ class User
         return $this->status;
     }
 
+    public function activate()
+    {
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function trash()
+    {
+        $this->status = self::STATUS_TRASH;
+    }
+
+    public function deactivate()
+    {
+        $this->status = self::STATUS_BLOCK;
+    }
+
+    public function isActive()
+    {
+        return ($this->status == self::STATUS_ACTIVE)? TRUE : FALSE;
+    }
+
+    public function isTrashed()
+    {
+        return ($this->status == self::STATUS_TRASH)? TRUE : FALSE;
+    }
+
     public function setFirstname($fname)
     {
         $this->firstname = ucfirst($fname);
@@ -203,7 +240,11 @@ class User
 
     public function getName()
     {
-        return $this->firstname." ".$this->lastname;
+        if($this->firstname && $this->lastname)
+        {
+            return $this->firstname." ".$this->lastname;
+        }
+        return null;
     }
 
     public function setDateOfBirth($dob)
