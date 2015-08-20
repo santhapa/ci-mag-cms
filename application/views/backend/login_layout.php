@@ -14,6 +14,20 @@
     <!-- iCheck -->
     <link href="<?=base_url()?>/bower_components/admin-lte/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="<?=base_url()?>assets/templates/common/images/favicon.png" type="image/png" sizes="16x16">
+
+    <style type="text/css">
+        span .form-error, 
+        span.form-error{
+            color: rgb(237, 235, 235);
+            display: inline-block;
+            padding: 5px 8px;
+            background-color: rgb(169, 8, 8);
+            border-radius: 6px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 <body class="login-page">
     <div class="login-box">
@@ -21,7 +35,12 @@
             <a href="<?=base_url(); ?>"><?=$this->config->item('project_name'); ?></a>
         </div><!-- /.login-logo -->
 
-        <?php $this->load->view($content); ?>
+        <div class="login-box-body">
+            <?php echo ($this->session->flashdata('feedback')) ? $this->session->flashdata('feedback') : ''; ?>
+
+            <?php $this->load->view($content); ?>
+
+        </div><!-- /.login-box-body -->
 
     </div><!-- /.login-box -->
 

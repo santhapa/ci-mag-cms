@@ -27,6 +27,18 @@ class ValidationRuleManager{
 		'label' => 'Email Address',
 		'rules' => 'trim|required|valid_email|unique_email'
 	);
+
+	protected $firstname = array(
+		'field' => 'email',
+		'label' => 'First Name',
+		'rules' => 'trim|required|'
+	);
+
+	protected $lastname = array(
+		'field' => 'email',
+		'label' => 'Last Name',
+		'rules' => 'trim|required|'
+	);
 	
 	protected $group =	array(
 		'field' => 'group',
