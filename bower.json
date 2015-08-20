@@ -19,6 +19,7 @@
     "components-font-awesome": "~4.4.0",
     "jquery-validation": "~1.14.0",
     "ionicons": "~2.0.1",
+    "noty": "~2.3.6",
     "jquery": "~2.1.4"
   }
 }
