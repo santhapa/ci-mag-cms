@@ -25,7 +25,7 @@
                 </ul>
             </li> -->
             <li class="treeview">
-                <a href="#">
+                <a href="javascript.void(0)">
                     <i class="fa fa-user"></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">

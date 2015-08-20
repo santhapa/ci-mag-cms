@@ -23,8 +23,6 @@ abstract class Backend_Controller extends MY_Controller {
 		//common template data
 		$this->templateData['modulePath'] = $this->getModulePath();
 		$this->templateData['pageTitle'] = "";
-		$this->templateData['projectName'] = "<b>Magazine</b> CMS";
-		$this->templateData['projectName_short'] = "<b>MAG</b>";
 		$this->templateData['pageTitleSuffix'] = "Dashboard";
 
 	}
