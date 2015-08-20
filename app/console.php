@@ -11,6 +11,7 @@ define('EXT', '.php');
 
 require_once APPPATH."libraries/Doctrine.php";
 require_once APPPATH."commands/DataFixturesCommand.php";
+require_once APPPATH."commands/ModuleGeneratorCommand.php";
 
 $doctrine = new Doctrine();
 
@@ -47,6 +48,9 @@ $cli->addCommands(array(
 
 	    //fixture command
 	    new \commands\DataFixturesCommand($doctrine->em),
+
+	    //custom commands
+	    new \commands\ModuleGeneratorCommand(),
 ));
 
 $cli->run();
