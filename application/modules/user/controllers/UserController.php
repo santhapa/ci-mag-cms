@@ -30,13 +30,13 @@ class UserController extends Frontend_Controller {
 			if($user->getUsername() == $username && $user->getToken() == $token)
 			{
 				$user->setToken(null);
-				$user->setStatus(1);
+				$user->activate();
 				$userManager->updateUser($user);
 				$this->session->setFlashMessage('feedback', 'Your account has been confirmed. Please login to continue.', 'success');
 			}else{
 				$this->session->setFlashMessage('feedback', 'Invalid token.', 'error');
 			}
-			redirect(site_url('admin/login'));
+			redirect(site_url('auth/login'));
 		}
 		show_404($page = '', $log_error = TRUE);
 	}

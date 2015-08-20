@@ -19,14 +19,14 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?=\App::user()->getName(); ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             <img src="" class="img-circle" alt="User Image" />
                             <p>
-                                Alexander Pierce - Web Developer
+                                <?=\App::user()->getName(); ?>
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
@@ -48,7 +48,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="<?=site_url('auth/logout');?>" class="btn btn-default btn-flat">Logout</a>
                             </div>
                         </li>
                     </ul>
