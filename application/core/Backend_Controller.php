@@ -10,12 +10,8 @@ abstract class Backend_Controller extends MY_Controller {
 	{
 		parent:: __construct();
 
-		//load session and breadcrumb library for the backend panel
-		$this->load->library('session');
+		//load breadcrumb library for the backend panel
 		$this->load->library('breadcrumbs');
-
-		// load helper class
-		$this->load->helper('ui_helper');
 
 		// initiate breadcrumb for backend
 		$this->breadcrumbs->push('Dashboard', site_url('admin/dashboard'));
