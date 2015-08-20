@@ -24,7 +24,6 @@ abstract class Backend_Controller extends MY_Controller {
 		$this->templateData['modulePath'] = $this->getModulePath();
 		$this->templateData['pageTitle'] = "";
 		$this->templateData['pageTitleSuffix'] = "Dashboard";
-
 	}
 
 	//force module controller extending this class to return the module path

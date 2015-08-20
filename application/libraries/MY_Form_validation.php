@@ -7,6 +7,10 @@ class MY_Form_validation extends CI_Form_validation{
     function __construct(){
     	parent::__construct();
 		$this->CI =& get_instance();
+
+		// changing default error delimiters
+		$this->_error_prefix = '<span class="form-error">';
+        $this->_error_suffix = '</span>';
     }
 
     function run($module = '', $group = '') {

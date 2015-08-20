@@ -10,7 +10,6 @@ class UserController extends Backend_Controller {
 
 		$this->load->helper('user');
 		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<span class="form-error">', '</span>');
 	}
 
 	public function setModulePath()
