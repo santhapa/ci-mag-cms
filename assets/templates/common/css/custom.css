@@ -8,3 +8,24 @@ span.form-error{
 	margin-top: 5px;
 	font-weight: bold;
 }
+
+/*Custom box css admin lte*/
+.box.box-mag{
+	border-top-color: #3B7596;
+}
+.box.box-solid.box-mag {
+  /*border: 1px solid ##3B7596;*/
+}
+.box.box-solid.box-mag > .box-header {
+  color: #ffffff;
+  background: #3B7596;
+  background-color: #3B7596;
+}
+.box.box-solid.box-mag > .box-header a,
+.box.box-solid.box-mag > .box-header .btn {
+  color: #ffffff;
+}
+
+.box-header .box-title{
+	font-size: 15px;
+}
