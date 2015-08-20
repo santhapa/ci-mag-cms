@@ -18,7 +18,7 @@
 <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?=base_url(); ?>"><?=$projectName; ?></a>
+            <a href="<?=base_url(); ?>"><?=$this->config->item('project_name'); ?></a>
         </div><!-- /.login-logo -->
 
         <?php $this->load->view($modulePath.$content); ?>
