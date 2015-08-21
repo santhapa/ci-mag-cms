@@ -54,7 +54,7 @@ class UserController extends Backend_Controller {
 				$user->setGroup($group);
 				
 				//set token for user to confirm registration process
-				$token = md5(sha1($this->input->post('username')));
+				$token = md5(sha1(new \DateTime().$this->input->post('username')));
 				$user->setToken($token);
 
 				$userManager->updateUser($user);
