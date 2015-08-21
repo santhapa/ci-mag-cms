@@ -24,22 +24,23 @@ class AuthController extends Frontend_Controller {
 				// continue if user exists
 				if($user)
 				{
-					if(!$user->getStatus())
-					{
-						throw new Exception("Account has not been enabled.");
-					}
+					if($user->getStatus() == \user\models\User::STATUS_PENDING)
+						throw new Exception("Please click the confirmation link received on your mail to activate the account.");
+
+					if(!$user->isActive())
+						throw new Exception("Your account has been disabled. Contact administrator.");
 
 					if(password_verify($password, $user->getPassword()))
 					{
 						//set user
 						\App::setUser($user);
 						$this->session->userId = $user->getId();
-						$this->session->setFlashMessage('temp', "Welcome! {$user->getUsername()}. Enjoy your session.", 'info');
+						$this->session->setFlashMessage('temp', "Welcome! {$user->getUsername()}.<br>Enjoy your session.", 'info');
 						redirect(site_url('admin/dashboard'));
 					}
-					$this->session->setFlashMessage('feedback', 'Invalid password.', 'error');
+					throw new Exception("Invalid password.");
 				}else{
-					$this->session->setFlashMessage('feedback', 'Invalid username or email', 'error');
+					throw new Exception("Invalid username or email.");
 				}
 			} catch (Exception $e) {
 				$this->session->setFlashMessage('feedback', $e->getMessage(), 'error');
@@ -50,7 +51,6 @@ class AuthController extends Frontend_Controller {
 		$this->templateData['pageTitle'] = 'Login';
 		$this->templateData['content'] = 'auth/login';
 		$this->load->view('backend/login_layout', $this->templateData);
-
 	}
 
 	public function logout()

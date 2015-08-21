@@ -67,7 +67,7 @@ class UserController extends Backend_Controller {
 				$to['to_email'] = $this->input->post('email');
 
 				$subject = "Confirm your account!";
-				$message = "<h2>Welcome! {$user->getUsername()}</h2> <p>Your account has been created at Magazine CMS but needs approval before you can continue.</p> <p>Please confirm your account by clicking the link below.</p><p><a href='".site_url('user/confirm')."?token={$token}{$user->getId()}&username={$user->getUsername()}'>".site_url('user/confirm')."?token={$token}{$user->getId()}&username={$user->getUsername()}</a></p>";
+				$message = "<h2>Welcome! {$user->getUsername()}</h2> <p>Your account has been created at Magazine CMS but needs approval before you can continue.</p> <p>Please confirm your account by clicking the link below.</p><p><a href='".site_url('user/confirm')."?token={$token}&username={$user->getUsername()}'>".site_url('user/confirm')."?token={$token}&username={$user->getUsername()}</a></p>";
 
 				$mailerManager->sendMail($from, $to, $subject, $message);
 
