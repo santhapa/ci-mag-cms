@@ -3,8 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UserController extends Frontend_Controller {
 
-	public function index()
+	public function logout()
 	{
-		$this->load->view('user/frontend/index');
+		$this->session->sess_destroy();
+		redirect('auth/login');
 	}
 }

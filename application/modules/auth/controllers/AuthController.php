@@ -2,6 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class AuthController extends Frontend_Controller {
+	
+	public function __construct()
+	{
+		parent::__construct();
+
+		if($this->session->userId)
+			redirect('admin/dashboard');
+	}
 
 	public function login()
 	{
@@ -51,12 +59,6 @@ class AuthController extends Frontend_Controller {
 		$this->templateData['pageTitle'] = 'Login';
 		$this->templateData['content'] = 'auth/login';
 		$this->load->view('backend/login_layout', $this->templateData);
-	}
-
-	public function logout()
-	{
-		$this->session->sess_destroy();
-		redirect('auth/login');
 	}
 
 	public function confirm()
@@ -128,7 +130,83 @@ class AuthController extends Frontend_Controller {
 
 		} catch (Exception $e) {
 			$this->session->setFlashMessage('feedback', "{$e->getMessage()}", 'error');
-					redirect(site_url('auth/login'));
+			redirect(site_url('auth/login'));
+		}
+	}
+
+	public function reset()
+	{
+		$token = $this->input->get('token');
+		$username = $this->input->get('username');
+
+		$userManager = $this->container->get('user.user_manager');
+		$user = $userManager->getUserByUsername($username);
+
+		if($user)
+		{
+			if($user->getToken() == $token)
+			{
+				$user->setToken(null);
+				$userManager->updateUser($user);
+
+				$this->session->reset = $username;
+				redirect(site_url('auth/resetPassword'));
+			}else{
+				$this->session->setFlashMessage('feedback', 'Invalid token.', 'error');
+			}
+			redirect(site_url('auth/login'));
+		}
+		show_404($page = '', $log_error = TRUE);
+	}
+
+	public function forgetPassword()
+	{
+		try 
+		{
+			if($this->input->post())
+			{
+				$username = $this->input->post('username');
+				if(!$username) throw new Exception("Username or email is required.", 1);
+
+				$userManager = $this->container->get('user.user_manager');
+				$user = null;
+				if($uname =$userManager->getUserByUsername($username)){
+					$user = $uname;
+				}elseif($email = $userManager->getUserByEmail($username)){
+					$user = $email;
+				}
+
+				if(!$user) throw new Exception("User with such username/email doesnot exists.", 1);
+
+				//set token for user to resetPassword
+				$token = md5(sha1(new \DateTime().$username));
+				$user->setToken($token);
+
+				$userManager->updateUser($user);
+
+				$mailerManager = $this->container->get('mailer_manager');
+
+				$from['from_name'] = 'Magazine CMS';
+				$from['from_email'] = 'magcms@gmail.com';
+				$to['to_name'] = $user->getName();
+				$to['to_email'] = $user->getEmail();
+
+				$subject = "Reset Password!";
+				$message = "<h2>Hey! {$user->getUsername()}</h2> <p>You have requested to reset your password. Please follow the link to reset password.</p><p><a href='".site_url('auth/reset')."?token={$token}&username={$user->getUsername()}'>".site_url('auth/reset')."?token={$token}&username={$user->getUsername()}</a></p>";
+
+				$mailerManager->sendMail($from, $to, $subject, $message);
+				
+				$this->session->setFlashMessage('feedback', "Please check your email to continue.", 'info');
+				redirect(site_url('auth/login'));
+			}
+
+			$this->templateData['pageTitle'] = 'Forget Password';
+			$this->templateData['content'] = 'auth/forget_password';
+			$this->load->view('backend/login_layout', $this->templateData);
+
+		} catch (Exception $e) {
+			$this->session->setFlashMessage('feedback', "{$e->getMessage()}", 'error');
+					redirect(site_url('auth/forgetPassword'));
 		}
 	}
 }

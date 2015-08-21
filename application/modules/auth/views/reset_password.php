@@ -10,10 +10,8 @@
         <?php echo form_error('confPassword'); ?>
     </div>
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-xs-6">
             <button type="submit" class="btn btn-primary btn-block btn-flat">Reset and Login</button>
         </div><!-- /.col -->
     </div>
 </form>
-
-<a href="#">I forgot my password</a><br>
