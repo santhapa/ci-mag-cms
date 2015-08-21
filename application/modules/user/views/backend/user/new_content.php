@@ -4,7 +4,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="username">Username</label>
             <div class="col-sm-8">
-                <input class="form-control required" type="text" id="username" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username" >
+                <input class="form-control required" type="text" id="username" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username" required>
                 <?php echo form_error('username'); ?>    
             </div>
         </div>
