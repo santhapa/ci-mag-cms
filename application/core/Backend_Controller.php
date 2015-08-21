@@ -10,6 +10,21 @@ abstract class Backend_Controller extends MY_Controller {
 	{
 		parent:: __construct();
 
+		if(!$this->session->userId){
+			$requestUrl = str_replace( 
+				array(
+					$this->config->item('url_suffix'), 
+					site_url(), 
+					'auth/login'
+				), 
+				'', 
+				current_url()
+			);
+
+			$this->session->set_tempdata('requestUrl', $requestUrl, 300);
+			redirect('auth/login');
+		}
+
 		//load breadcrumb library for the backend panel
 		$this->load->library('breadcrumbs');
 

@@ -7,8 +7,7 @@ class AuthController extends Frontend_Controller {
 	{
 		parent::__construct();
 
-		if($this->session->userId)
-			redirect('admin/dashboard');
+		if($this->session->userId)	redirect('admin/dashboard');
 	}
 
 	public function login()
@@ -44,6 +43,12 @@ class AuthController extends Frontend_Controller {
 						\App::setUser($user);
 						$this->session->userId = $user->getId();
 						$this->session->setFlashMessage('temp', "Welcome! {$user->getUsername()}.<br>Enjoy your session.", 'info');
+						
+						//check if requested url exists
+						if($redirect = $this->session->requestUrl)
+						{
+							redirect($redirect);
+						}
 						redirect(site_url('admin/dashboard'));
 					}
 					throw new Exception("Invalid password.");
