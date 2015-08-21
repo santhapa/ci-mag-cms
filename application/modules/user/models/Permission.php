@@ -6,7 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="mag_permission")
+ * @ORM\Table(name="mag_permissions")
  */
 class Permission
 {
@@ -21,6 +21,11 @@ class Permission
 	* @ORM\Column(type="string", length=255, nullable=false, unique=true)
 	*/
     private $name;
+
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $module;
 
     /**
      * @ORM\Column(type="string",length=255)
@@ -44,6 +49,16 @@ class Permission
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    public function setModule($module)
+    {
+        $this->module = $module;
     }
 
     public function getDescription()

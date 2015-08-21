@@ -1,0 +1,3 @@
+- {name: addUser, description: "Create new user." }
+- {name: editUser, description: "Edit, block or unblock user." }
+- {name: deleteUser, description: "Delete user temporarily or permanently." }
