@@ -52,14 +52,41 @@ class PermissionManager{
 		return $this->em->getRepository("\user\models\Permission")->findOneBy(array('id'=>$id));
 	}
 
-	public function getPermissions($array = false)
+	public function getPermissions($array = false, $fields = array())
 	{
 		if($array)
 		{
+			if(is_array($fields) && $fields)
+			{
+				$p = array();
+				if(in_array('id', $fields))
+				{
+					$p[] = 'p.id' ;
+				}
+				if(in_array('name', $fields))
+				{
+					$p[] = 'p.name' ;
+				}
+				if(in_array('description', $fields))
+				{
+					$p[] = 'p.description' ;
+				}
+				if(in_array('module', $fields))
+				{
+					$p[] = 'p.module' ;
+				}
+
+				// if fields not set get all
+				if(!$p)
+				{
+					$p = 'p';
+				}
+
+			}
 			return $this->em
                ->getRepository('\user\models\Permission')
                ->createQueryBuilder('p')
-               ->select('p')
+               ->select($p)
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
