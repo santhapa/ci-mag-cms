@@ -56,6 +56,9 @@ $route['translate_uri_dashes'] = FALSE;
 // $route['admin/user'] = 'user/admin/user/index';
 foreach (glob(APPPATH.'modules/*/config', GLOB_ONLYDIR) as $m)
 {
-	include_once($m.'/'.'routes.php');
+	if(file_exists($m.'/'.'routes.php'))
+	{
+		include_once($m.'/'.'routes.php');
+	}	
 }
 
