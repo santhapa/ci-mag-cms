@@ -20,12 +20,12 @@ class MY_Form_validation extends CI_Form_validation{
 	
 	function valid_username($username)
 	{
-		$this->CI->form_validation->set_message('valid_username',"%s can contain only alphanumeric, underscores, hyphen and dot characters.");
+		$this->CI->form_validation->set_message('valid_username',"{field} can contain only alphanumeric, underscores, hyphen and dot characters.");
 		return ( ! preg_match("/^([a-z0-9_\-\.])+$/i", $username)) ? FALSE : TRUE;
 	}
 
 	function unique_username($username){
-		$this->CI->form_validation->set_message('unique_username',"The %s ($username)  is already registered.");
+		$this->CI->form_validation->set_message('unique_username',"The {field} ($username)  is already registered.");
 
 		$userManager = $this->CI->container->get('user.user_manager');
 		$user = $userManager->getUserByUsername($username);
@@ -33,7 +33,7 @@ class MY_Form_validation extends CI_Form_validation{
 	}
 
 	function unique_email($email){
-		$this->CI->form_validation->set_message('unique_email',"The %s ($email)  is already registered.");
+		$this->CI->form_validation->set_message('unique_email',"The {field} ($email)  is already registered.");
 
 		$userManager = $this->CI->container->get('user.user_manager');
 		$user = $userManager->getUserByEmail($email);
@@ -41,7 +41,7 @@ class MY_Form_validation extends CI_Form_validation{
 	}
 
 	function valid_user_group($id){
-		$this->CI->form_validation->set_message('valid_user_group',"Invalid %s selected.");
+		$this->CI->form_validation->set_message('valid_user_group',"Invalid {field} selected.");
 
 		$groupManager = $this->CI->container->get('user.group_manager');
 		$group = $groupManager->getGroupById($id);
