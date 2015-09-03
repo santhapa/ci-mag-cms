@@ -33,11 +33,59 @@ class App {
 		if(self::user()){
 			$CI =& get_instance();
 			$user = self::user();
-			if($user->getGroup()->getSlug() == 'super_admin')
+			if($user->getGroup()->getSlug() == 'super_admin' || $user->getUsername() == 'superadmin')
 			{
 				return true;
 			}
 		}
 		return false;
 	} 
+
+	public static function isSuperGroup(\user\models\Group $group)
+	{
+		if($group->getSlug() == 'super_admin'){
+			return true;
+		}
+		return false;
+	}
+
+	public static function isGranted($request, $or=true)
+	{
+		if(!$request) return true;
+
+		if(self::isSuperUser()) return true;
+
+		$user = self::user();
+
+		if(!$user) return false;
+
+		$permissions = $user->getGroup()->getPermissions();
+		$can = array();
+		foreach ($permissions as $p) {
+			$can[] = $p->getName();
+		}
+
+		if(is_array($request))
+		{
+			// true if one of the permission exists
+			if($or == true){
+				foreach ($request as $r) {
+					if(in_array($r, $can)) return true;
+				}
+				return false;
+			}
+
+			// true only if all permission are granted
+			if($or == false){
+				foreach ($request as $r) {
+					if(!in_array($r, $can)) return false;
+				}
+				return true;
+			}
+		}
+
+		if(in_array($request, $can)) return true;
+
+		return false;
+	}
 }
