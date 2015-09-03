@@ -39,8 +39,12 @@ class AuthController extends Frontend_Controller {
 
 					if(password_verify($password, $user->getPassword()))
 					{
+						// load permission from file to db
+						\App::init();
+
 						//set user
 						\App::setUser($user);
+
 						$this->session->userId = $user->getId();
 						$this->session->setFlashMessage('temp', "Welcome! {$user->getUsername()}.<br>Enjoy your session.", 'info');
 						

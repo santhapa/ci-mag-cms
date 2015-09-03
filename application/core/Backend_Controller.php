@@ -9,8 +9,12 @@ abstract class Backend_Controller extends MY_Controller {
 	public function __construct()
 	{
 		parent:: __construct();
+		
+		// // load permission from file to db
+		// \App::init();
 
 		if(!$this->session->userId){
+			// configure referral link
 			$requestUrl = str_replace( 
 				array(
 					$this->config->item('url_suffix'), 

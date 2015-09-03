@@ -4,5 +4,5 @@
 - {name: deleteUser, description: "Delete user temporarily or permanently." }
 - {name: resetPassword, description: "Reset password of other users." }
 - {name: viewUserGroup, description: "View user groups." }
-- {name: manageUserGroup, description: "Manges user groups (add/edit/delete)." }
-- {name: moderatePermission, description: "Manges group permissions." }
+- {name: manageUserGroup, description: "Manages user groups (add/edit/delete)." }
+- {name: moderatePermission, description: "Manages group permissions." }

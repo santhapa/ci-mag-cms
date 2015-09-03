@@ -4,6 +4,14 @@ class App {
 
 	private static $user;
 
+	public static function init()
+	{
+		user\security\Permission::readModules();
+		user\security\Permission::insertToTable();
+
+		return;
+	}
+
 	public static function user() {
 		
 		if(!isset(self::$user)) {

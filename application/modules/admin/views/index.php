@@ -10,15 +10,6 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <h3>Welcome to Dashboard!</h3>
-                    <?php
-
-                        user\security\Permission::readModules();
-
-                        user\security\Permission::insertToTable();
-
-
-
-                    ?>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
