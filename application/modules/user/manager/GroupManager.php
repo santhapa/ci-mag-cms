@@ -66,4 +66,16 @@ class GroupManager{
 
 		return $this->em->getRepository("user\models\Group")->findAll();
 	}
+
+	public function getGroupBySlug($slug)
+	{
+		return $this->em->getRepository("\user\models\Group")->findOneBy(array('slug'=>$slug));
+	}
+
+	public function getGroupByName($name)
+	{
+		return $this->em->getRepository("\user\models\Group")->findOneBy(array('name'=>$name));
+	}
+
+
 }

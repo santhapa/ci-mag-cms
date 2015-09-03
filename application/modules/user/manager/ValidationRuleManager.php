@@ -29,17 +29,77 @@ class ValidationRuleManager{
 	);
 
 	protected $firstname = array(
-		'field' => 'email',
+		'field' => 'firstname',
 		'label' => 'First Name',
-		'rules' => 'trim|required|'
+		'rules' => 'trim|required'
 	);
 
 	protected $lastname = array(
-		'field' => 'email',
+		'field' => 'lastname',
 		'label' => 'Last Name',
-		'rules' => 'trim|required|'
+		'rules' => 'trim|required'
+	);
+
+	protected $dateOfBirth = array(
+		'field' => 'dateOfBirth',
+		'label' => 'Date of Birth',
+		'rules' => 'trim'
+	);
+
+	protected $gender = array(
+		'field' => 'gender',
+		'label' => 'Gender',
+		'rules' => 'trim|required'
+	);
+
+	protected $phoneNumber = array(
+		'field' => 'phoneNumber',
+		'label' => 'Phone Number',
+		'rules' => 'trim'
+	);
+
+	protected $mobileNumber = array(
+		'field' => 'mobileNumber',
+		'label' => 'Mobile Number',
+		'rules' => 'trim'
 	);
 	
+	protected $address = array(
+		'field' => 'address',
+		'label' => 'Address',
+		'rules' => 'trim'
+	);
+	
+	protected $biography = array(
+		'field' => 'biography',
+		'label' => 'Biography',
+		'rules' => 'trim'
+	);
+	
+	protected $website = array(
+		'field' => 'website',
+		'label' => 'Website',
+		'rules' => 'trim|valid_url'
+	);
+	
+	protected $facebookId = array(
+		'field' => 'facebookId',
+		'label' => 'Facbook URL',
+		'rules' => 'trim|valid_url'
+	);
+	
+	protected $gplusId = array(
+		'field' => 'gplusId',
+		'label' => 'Google Plus URL',
+		'rules' => 'trim|valid_url'
+	);
+	
+	protected $twitterId = array(
+		'field' => 'twiiterId',
+		'label' => 'Twitter URL',
+		'rules' => 'trim|valid_url'
+	);
+
 	protected $group =	array(
 		'field' => 'group',
 		'label' => 'Group',

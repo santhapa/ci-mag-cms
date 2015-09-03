@@ -13,7 +13,3 @@ services:
 
     user.rule_manager:
         class: user\manager\ValidationRuleManager
-
-    user.acl:
-        class: user\security\ACL
-        arguments: ["%entityManager%"]

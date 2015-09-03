@@ -93,4 +93,9 @@ class PermissionManager{
 
 		return $this->em->getRepository("user\models\Permission")->findAll();
 	}
+
+	public function getPermissionByName($name)
+	{
+		return $this->em->getRepository("\user\models\Permission")->findOneBy(array('name'=>$name));
+	}
 }

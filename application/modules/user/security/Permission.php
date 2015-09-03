@@ -48,13 +48,13 @@ class Permission{
 	public static function insertToTable()
 	{
 		$CI =& get_instance();
-
-		$permissions = self::$filePermissions;
+		$filePermissions = self::$filePermissions;
+		$modPermissions = self::$modulePermissions;
 		$permissionManager = $CI->container->get('user.permission_manager');
-		$dbPermissions = $permissionManager->getPermissions(true, array('name', 'description'));
+		$dbPermissions = $permissionManager->getPermissions(true, array('name'));
 
 		//flatten mutidimensional array
-		$file = self::flatten($permissions);
+		$file = self::flatten($modPermissions);
 		$db = self::flatten($dbPermissions);
 
 		//get diff permissions
@@ -63,14 +63,30 @@ class Permission{
 		//inflate to get newPermissions
 		$newPermissions = self::inflate($diff);
 
+		// insert new permissions to table
 		foreach ($newPermissions as $module => $permission) {
-			foreach ($permission as $p) {
+			foreach ($permission as $key=>$name) {
 				$perm = $permissionManager->createPermission();
-				$perm->setName($p['name']);
-				$perm->setDescription($p['description']);
+				$perm->setName($name);
+				$perm->setDescription($filePermissions[$module][$key]['description']);
 				$perm->setModule($module);
 				$permissionManager->updatePermission($perm, false);
 			}			
+		}
+
+		//remove unwanted permissions from db
+		$dbPermissions = $permissionManager->getPermissions(true, array('name'));
+		$filePermissions = self::$permissions;
+		$file = self::flatten($filePermissions);
+		$db = self::flatten($dbPermissions);
+		$diff = array_diff($db, $file);
+		$deletedPermissions = self::inflate($diff);
+
+		foreach ($deletedPermissions as $permission) {
+			foreach ($permission as $p) {
+				$del = $permissionManager->getPermissionByName($p);
+				if($del) $CI->doctrine->em->remove($del);					
+			}
 		}
 		$CI->doctrine->em->flush();
 
@@ -118,6 +134,40 @@ class Permission{
 	        }
 	    }
 	    return $ret;
+	}
+
+	// issue with no description if same description on db but new permission name
+	public static function _insertToTable()
+	{
+		$CI =& get_instance();
+
+		$permissions = self::$filePermissions;
+		$permissionManager = $CI->container->get('user.permission_manager');
+		$dbPermissions = $permissionManager->getPermissions(true, array('name', 'description'));
+
+		//flatten mutidimensional array
+		$file = self::flatten($permissions);
+		$db = self::flatten($dbPermissions);
+
+		//get diff permissions
+		$diff = array_diff($file, $db);
+
+		//inflate to get newPermissions
+		$newPermissions = self::inflate($diff);
+
+		// insert new permissions to table
+		foreach ($newPermissions as $module => $permission) {
+			foreach ($permission as $p) {
+				$perm = $permissionManager->createPermission();
+				$perm->setName($p['name']);
+				$perm->setDescription($p['description']);
+				$perm->setModule($module);
+				$permissionManager->updatePermission($perm, false);
+			}			
+		}
+		$CI->doctrine->em->flush();
+
+		return;
 	}
 
 }

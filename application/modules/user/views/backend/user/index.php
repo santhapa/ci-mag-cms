@@ -1,7 +1,9 @@
+<?php if(\App::isGranted('addUser')): ?>
 <!-- Main content -->
 <section class="content-header">
 		<span><a href="<?php echo site_url('admin/user/add')?>" class="btn btn-primary">Add User</a></span>
 </section>
+<?php endif; ?>
 
 <section class="content">
 	<div class="row">

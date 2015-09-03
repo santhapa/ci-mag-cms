@@ -8,7 +8,7 @@ use user\models\Group;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="mag_users")
+ * @ORM\Table(name="nim_users")
  */
 class User
 {
@@ -134,7 +134,7 @@ class User
 
     /**
      * @ORM\ManyToOne(targetEntity="user\models\Group", inversedBy="users")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
     **/
     protected $group;
 

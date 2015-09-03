@@ -14,10 +14,12 @@ class LoadUserData extends AbstractFixture
     {
 		$user = new User();
 		$user->setUsername('superadmin');
+		$user->setFirstname('Super');
+		$user->setLastname('Admin');
 		$user->setPassword(password_hash('123456', PASSWORD_BCRYPT));
 		$user->setEmail('superadmin@gmail.com');
 		$user->setCreatedAt(new \DateTime());
-		$user->setStatus(true);
+		$user->setStatus(User::STATUS_ACTIVE);
 		$user->setGroup($this->getReference('super_group'));
 
 		$manager->persist($user);

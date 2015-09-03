@@ -5,6 +5,8 @@ namespace user\manager;
 use Doctrine\ORM\EntityManager;
 use user\models\User;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 class UserManager{
 
 	private $em;
@@ -97,5 +99,23 @@ class UserManager{
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
 		return $this->em->getRepository("\user\models\User")->findOneBy(array('email'=>$email));
+	}
+
+	public function paginateUsers($offset = null, $perpage=null){
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('u, g')
+			->from('user\models\User', 'u')
+			->leftJoin('u.group', 'g')
+			->where('1=1');
+
+		if(!is_null($offset))
+			$qb->setFirstResult($offset);
+
+		if(!is_null($perpage))
+			$qb->setMaxResults($perpage);
+		$qb->orderBy('u.username','asc');
+
+		$paginator = new Paginator($qb->getQuery(), $fetchJoin = true);
+		return $paginator;
 	}
 }
