@@ -22,4 +22,4 @@
     </div>
 </form>
 
-<a href="<?=site_url('auth/forgetPassword'); ?>">I forgot my password</a><br>
+<a href="<?php echo site_url('auth/forgetPassword'); ?>">I forgot my password</a><br>
