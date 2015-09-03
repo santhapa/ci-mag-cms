@@ -92,13 +92,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if(!$user->isActive()) throw new Exception("User is currently disabled.", 1);
 			
@@ -141,13 +142,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if($user->isActive()) throw new Exception("User is already active.", 1);
 
@@ -169,13 +171,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if(!$user->isActive()) throw new Exception("User is already disabled.", 1);
 
@@ -197,13 +200,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if($user->getStatus() != \user\models\User::STATUS_BLOCK) throw new Exception("User is not blocked.", 1);
 
@@ -225,13 +229,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if(!$user->isActive()) throw new Exception("User is currently disabled.", 1);
 
@@ -253,13 +258,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if(!$user->isTrashed()) throw new Exception("Only trashed user can be deleted permanently.", 1);
 
@@ -280,13 +286,14 @@ class UserController extends Backend_Controller {
 
 		try {
 			if(!$username) throw new Exception("Error Processing Request.", 1);
-
-			if($username == 'superadmin') redirect('admin/dashboard');
 		
 			$userManager = $this->container->get('user.user_manager');
 			$user = $userManager->getUserByUsername($username);
 
 			if(!$user) throw new Exception("User not found.", 1);
+
+			//retrict if trying to edit super user 
+			if(\App::isSuperUser($user, false)) redirect('admin/dashboard');
 			
 			if(!$user->isActive()) throw new Exception("User is currently disabled.", 1);
 			

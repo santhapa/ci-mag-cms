@@ -24,9 +24,13 @@
 								<td><?php echo $g->getName();?></td>
         						<td><?php echo ($g->getUsers()) ? count($g->getUsers()) : 0 ?></td>
         						<td><?php
-	        						echo action_button('permissions',site_url('admin/user/group/permissions/'.$g->getSlug()) ,array('title'	=>	'Edit '.$g->getSlug().' Permissions' ))."&emsp;";
-	        						echo action_button('edit',site_url('admin/user/group/edit/'.$g->getSlug()) ,array('title'	=>	'Edit '.$g->getSlug() ))."&emsp;";
-	        						echo action_button('delete',site_url('admin/user/group/delete/'.$g->getSlug()) ,array('title'	=>	'Delete '.$g->getSlug() ));
+        							if(\App::isGranted('moderatePermission'))
+	        							echo action_button('permissions',site_url('admin/user/group/permissions/'.$g->getSlug()) ,array('title'	=>	'Edit '.$g->getSlug().' Permissions' ))."&emsp;";
+        							
+        							if(\App::isGranted('manageUserGroup')):
+		        						echo action_button('edit',site_url('admin/user/group/edit/'.$g->getSlug()) ,array('title'	=>	'Edit '.$g->getSlug() ))."&emsp;";
+		        						echo action_button('delete',site_url('admin/user/group/delete/'.$g->getSlug()) ,array('title'	=>	'Delete '.$g->getSlug() ));
+									endif;
 								?>
         						</td>
         					</tr>
@@ -56,35 +60,6 @@
 		</div><!-- /.col -->
 	</div><!-- /.row -->
 </section>
-
-<script type="text/javascript">
-// $(function(){
-// 	$('.clone-group').click(function(e){
-// 		e.preventDefault();
-// 		var _id = $(this).attr('id').split('-'),
-// 			gid = _id[1];		
-// 		$('.wrapper').mask("Please wait while we copy the group.");
-
-// 		$.ajax({
-// 			type	:'GET',
-// 			url		:'<?php echo base_url().'user/group/copygroup/'?>'+gid,
-// 			data	:null,
-// 			success	:function(res){
-// 				res = $.parseJSON(res);
-// 				$('.wrapper').unmask();
-// 				if(res.response == 'success'){
-// 					window.location = '<?php echo base_url().'user/group/edit/'?>'+res.group_id;
-// 				}else{
-// 					alert('An error occurred while copying the group. Please try again.');
-// 				}
-// 			},
-// 			failure	:function(){
-// 			},			
-// 		});
-// 	});
-// });
-</script>
-
 
 <script>
 $(function(){

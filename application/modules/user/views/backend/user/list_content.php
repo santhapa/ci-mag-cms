@@ -12,6 +12,8 @@
 		</thead>
 		<tbody>
 			<?php $count=0; foreach ($users as $user): 
+				if(\App::isSuperUser($user, false)) continue;
+
 				if($status == \user\models\User::STATUS_TRASH)
 				{
 					if($user->getStatus() != $status) continue;

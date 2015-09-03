@@ -36,9 +36,16 @@ class App {
 		self::$user = $user;
 	}
 
-	public static function isSuperUser()
+	public static function isSuperUser($user = null, $current = true)
 	{
-		if(self::user()){
+		if($user && $current == false && ($user instanceOf \user\models\User)){
+			if($user->getGroup()->getSlug() == 'super_admin' || $user->getUsername() == 'superadmin')
+			{
+				return true;
+			}
+		}
+
+		if($current == true && self::user()){
 			$CI =& get_instance();
 			$user = self::user();
 			if($user->getGroup()->getSlug() == 'super_admin' || $user->getUsername() == 'superadmin')
@@ -46,6 +53,8 @@ class App {
 				return true;
 			}
 		}
+
+
 		return false;
 	} 
 
