@@ -48,4 +48,24 @@ class MY_Form_validation extends CI_Form_validation{
 
 		return ($group) ? true : false;
 	}
+
+	function unique_group_name($name)
+	{
+		$this->CI->form_validation->set_message('unique_group_name',"Group with name ({$name}) has been added already.");
+
+		$groupManager = $this->CI->container->get('user.group_manager');
+		$group = $groupManager->getGroupByName($name);
+
+		return ($group) ? false : true;
+	}
+
+	// for prayer request
+	function unique_date($date){
+		$this->CI->form_validation->set_message('unique_date',"The  prayer request for ($date)  has been added already.");
+
+		$prayerManager = $this->CI->container->get('prayer.prayer_manager');
+
+		$prayer = $prayerManager->getPrayerByDate($date);
+		return ($prayer) ? false : true;
+	}
 } 

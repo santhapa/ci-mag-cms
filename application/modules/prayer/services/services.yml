@@ -1,0 +1,7 @@
+services:
+    prayer.prayer_manager:
+        class: prayer\manager\PrayerManager
+        arguments: ["%entityManager%"]
+
+    prayer.rule_manager:
+        class: prayer\manager\ValidationRuleManager

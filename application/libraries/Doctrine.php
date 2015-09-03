@@ -21,7 +21,7 @@ class Doctrine {
     public function __construct()
     {
         // load database configuration from CodeIgniter
-        require_once APPPATH.'config/database.php';
+        require APPPATH.'config/database.php';
 
 
         //A Doctrine Autoloader is needed to load the models

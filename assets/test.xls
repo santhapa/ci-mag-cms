@@ -1,0 +1,104 @@
+<style type="text/css">
+    table, th, td{
+        border: 1px solid #C4C4C4;
+    }
+    table{
+        width: 100%;
+        font-size: 15px;
+        border: 1px solid #C4C4C4;
+        border-radius: 3px;
+        margin: 5px 0px 10px 0px;
+        border-spacing: 0;
+    }
+    tr{
+        text-align: center;
+    }
+
+</style>
+
+<div class="grid_12">
+    <h2>Statement Report <small>(2015-05-25 to 2015-05-25)</small> </h2>
+    <p> 
+                <span> </span>
+        <span></span>
+        <span></span>
+        <span></span>        
+    </p>
+    <div class="section filter">
+                    <table class="list" style="border: 1px solid #C4C4C4;">
+                <tr>
+                    <th>S.N</th>
+                    <th>Web Session Id</th>
+                    <th>User Name(Initiated By)</th>
+                    <th> Date/time</th>
+                    <th>Transaction Type</th>
+                    <th>Registration , Certified Search , Receipt #</th>
+                    <th>Transaction Fee</th>
+                </tr>
+
+                                <tr>
+                    <td>1</td>
+                    <td>5658350573</td>
+                    <td>ishani</td>
+                    <td>2015-05-25 15:46:52 </td>
+                    <td>
+                    <a href="http://cib.demo.f1soft.com.np/search/viewChangeReport/3648195511" target='_blank'>Initial Notice</a>                    </td>
+                    
+                    <td> 
+                        3648195511                     </td>                    
+                    <td>500.00 </td>
+                </tr>
+                        <tr>
+                    <td>2</td>
+                    <td>5658350573</td>
+                    <td>ishani</td>
+                    <td>2015-05-25 15:39:45 </td>
+                    <td>
+                    <a href="http://cib.demo.f1soft.com.np/search/viewChangeReport/58603469" target='_blank'>Amendment Notice</a>                    </td>
+                    
+                    <td> 
+                        58603469                     </td>                    
+                    <td>500.00 </td>
+                </tr>
+                        <tr>
+                    <td>3</td>
+                    <td>5658350573</td>
+                    <td>ishani</td>
+                    <td>2015-05-25 15:37:24 </td>
+                    <td>
+                    <a href="http://cib.demo.f1soft.com.np/search/viewChangeReport/4398958383" target='_blank'>Initial Notice</a>                    </td>
+                    
+                    <td> 
+                        4398958383                     </td>                    
+                    <td>500.00 </td>
+                </tr>
+                        <tr>
+                    <td>4</td>
+                    <td>8760162780</td>
+                    <td>ishani</td>
+                    <td>2015-05-25 15:37:00 </td>
+                    <td>
+                    <a href="http://cib.demo.f1soft.com.np/search/viewChangeReport/4992529112" target='_blank'>Initial Notice</a>                    </td>
+                    
+                    <td> 
+                        4992529112                     </td>                    
+                    <td>500.00 </td>
+                </tr>
+                    </table>
+                <br>
+        <div class="account-summary" style="display:none">
+            <table>
+                <tr>
+                    <th>Starting Balance</th>
+                    <th>Ending Balance</th>
+                    
+                </tr>
+                <tr>
+                    <td>55101.03</td>
+                    <td>53101.03 </td>
+                </tr>
+            </table>
+        </div>
+                         
+    </div>
+</div>

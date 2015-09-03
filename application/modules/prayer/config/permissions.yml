@@ -1,0 +1,4 @@
+- {name: viewPrayer, description: "View prayer requests." }
+- {name: addPrayer, description: "Create new prayer request." }
+- {name: editPrayer, description: "Edit prayer request." }
+- {name: deletePrayer, description: "Delete prayer request." }

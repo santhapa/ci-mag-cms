@@ -5,7 +5,7 @@
     <title><?php echo ($pageTitle)? $pageTitle." :: ".$pageTitleSuffix : $pageTitleSuffix; ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="icon" href="<?=base_url()?>assets/templates/common/images/favicon.png" type="image/png" sizes="16x16">
+    <link rel="icon" href="<?php echo base_url()?>assets/templates/common/images/favicon.png" type="image/png" sizes="16x16">
     <?php get_styles(); ?>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -25,7 +25,7 @@
             ?>
             <section class="content-header">
                 <h1>
-                    <?=($pageTitle)? $pageTitle : ''; ?>
+                    <?php echo ($pageTitle)? $pageTitle : ''; ?>
                 </h1>
                 <?php echo $this->breadcrumbs->show(); ?>
                <!--  <ol class="breadcrumb">
