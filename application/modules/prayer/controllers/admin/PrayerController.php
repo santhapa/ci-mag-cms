@@ -234,6 +234,10 @@ class PrayerController extends Backend_Controller {
 				}
 			}else{
 				$data = $rowData[0];
+
+				// continue if all row is blank
+				if(!array_diff($data, array('','','','','',))) continue;
+
 				if(!$data[0] || !$data[1] || !$data[2] || !$data[3] || !$data[4])
 					throw new Exception("Row data cannot be blank. All fields are required.", 1);
 
