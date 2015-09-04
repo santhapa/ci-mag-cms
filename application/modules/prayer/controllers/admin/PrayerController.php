@@ -159,38 +159,111 @@ class PrayerController extends Backend_Controller {
 		}
 	}
 
-	public function readExcel()
+	public function import()
 	{
 		if(!\App::isGranted('addPrayer')) redirect('admin/dashboard');
 
-		$inputFileName = './assets/themes/nimpray/prayer/nimprayer-sample.xlsx';
+		try {
+			if($this->input->post())
+			{
+				if(isset($_FILES['excel_file']))
+				{
+					$config['upload_path'] = './assets/uploads/tmp/';
+					$config['allowed_types'] = 'xlsx';
+					$config['max_size']	= '1024';
+
+					$this->load->library('upload', $config);
+
+					if ( ! $this->upload->do_upload('excel_file'))
+						throw new Exception($this->upload->display_errors(), 1);
+
+					$excel = $this->upload->data();
+					$this->readExcel($excel['full_path']);
+					
+					$this->session->setFlashMessage('feedback', "Prayer request has been imported successfully.", 'success');	
+					redirect('admin/prayer');
+				}
+			}			
+		} catch (\Exception $e) {
+			$this->session->setFlashMessage('feedback', "Unable to import excel: {$e->getMessage()}", 'error');	
+			redirect(current_url());
+		}
+		
+		$this->breadcrumbs->push('Import', current_url());
+		$this->templateData['pageTitle'] = 'Import Excel';
+		$this->templateData['content'] = 'prayer/import_excel';
+		$this->load->view('backend/main_layout', $this->templateData);
+	}
+
+	public function readExcel($filename)
+	{
+		if(!\App::isGranted('addPrayer')) redirect('admin/dashboard');
 
 		//  Read your Excel workbook
 		try {
-			$inputFileType = \PHPExcel_IOFactory::identify($inputFileName);
-			$objReader = \PHPExcel_IOFactory::createReader($inputFileType);
-			$objPHPExcel = $objReader->load($inputFileName);
+			$fileType = \PHPExcel_IOFactory::identify($filename);
+			$objReader = \PHPExcel_IOFactory::createReader($fileType);
+			$objPHPExcel = $objReader->load($filename);
 		} catch(\Exception $e) {
-			die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+			die('Error loading file "'.pathinfo($filename,PATHINFO_BASENAME).'": '.$e->getMessage());
 		}
 
 		//  Get worksheet dimensions
-		$sheet = $objPHPExcel->getSheet(0); 
+		$sheet = $objPHPExcel->getSheet(0);
 		$highestRow = $sheet->getHighestRow(); 
 		$highestColumn = $sheet->getHighestColumn();
 
+		$prayerManager = $this->container->get('prayer.prayer_manager');
+
 		//  Loop through each row of the worksheet in turn
-		for ($row = 1; $row <= $highestRow; $row++){ 
-		//  Read a row of data into an array
+		for ($row = 1; $row <= $highestRow; $row++)
+		{ 
+			//  Read a row of data into an array
+			// $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, TRUE);
 			$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
-			echo "<pre>";
-				print_r($rowData);
-				echo "</pre>";
-			$date = \PHPExcel_Shared_Date::ExcelToPHPObject($rowData[0][0]);
-			echo $date->format('Y-m-d');
-			// exit;
-		//  Insert row data array into your database of choice here
+			if($row == 1)
+			{
+				$title = $rowData[0];
+				$comp = array('Date', 'Prayer Message', 'Verse', 'Verse Message', 'Image');
+
+				if(array_diff($title, $comp)){
+					throw new Exception("Invalid excel sample. Check first row", 1);
+				}
+			}else{
+				$data = $rowData[0];
+				if(!$data[0] || !$data[1] || !$data[2] || !$data[3] || !$data[4])
+					throw new Exception("Row data cannot be blank. All fields are required.", 1);
+
+				$prayerDate = \PHPExcel_Shared_Date::ExcelToPHPObject($data[0]);
+				// $prayerDate = $data[0];
+				$prayerMsg = $data[1];
+				$verse = trim($data[2]);
+				$verseMsg = trim($data[3]);
+				$imageUrl = prep_url(trim($data[4]));
+
+				if($prayerManager->getPrayerByDate($prayerDate->format('Y-m-d')))
+					throw new Exception("Prayer request for date '{$prayerDate->format('Y-m-d')}' already exists.", 1);
+				
+				$newPrayer = $prayerManager->createPrayer();
+
+				$newPrayer->setPrayerRequest($prayerMsg);
+				$newPrayer->setDate($prayerDate);
+				$newPrayer->setVerse($verse);
+				$newPrayer->setVerseMessage($verseMsg);
+				$newPrayer->setImageURL($imageUrl);
+
+				$prayerManager->updatePrayer($newPrayer, false);
+			}
 		}
+		$this->doctrine->em->flush();
+		return;
+	}
+
+	public function downloadSample()
+	{
+		$this->load->helper('download');
+		$data = file_get_contents($this->config->item('current_theme_path').'/prayer/nimprayer-sample.xlsx'); 
+		force_download('NIM_PRAYER_SAMPLE.xlsx', $data);
 	}
 
 }

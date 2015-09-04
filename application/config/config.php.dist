@@ -70,3 +70,4 @@ $config['controller_suffix'] = 'Controller';
 $config['project_name'] = "<b>NIM</b> Pray";
 $config['project_name_short'] = "<b>NIM</b>";
 $config['current_theme'] = "nimpray";
+$config['current_theme_path'] = APPATH."../assets/themes/".$config['current_theme'];

@@ -2,6 +2,8 @@
 <!-- Main content -->
 <section class="content-header">
 		<span><a href="<?php echo site_url('admin/prayer/add')?>" class="btn btn-primary">Add Prayer Request</a></span>
+		&emsp;
+		<span><a href="<?php echo site_url('admin/prayer/import')?>" class="btn btn-primary">Import</a></span>
 </section>
 <?php endif; ?>
 
