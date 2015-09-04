@@ -179,6 +179,9 @@ class PrayerController extends Backend_Controller {
 
 					$excel = $this->upload->data();
 					$this->readExcel($excel['full_path']);
+
+					// delete file after completion 
+					unlink($excel['full_path']);
 					
 					$this->session->setFlashMessage('feedback', "Prayer request has been imported successfully.", 'success');	
 					redirect('admin/prayer');
