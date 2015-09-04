@@ -63,7 +63,7 @@
 	        						}
 	        						case user\models\User::STATUS_TRASH :{
 										if(\App::isGranted('editUser'))
-	        								echo action_button('unblock', site_url('admin/user/activate/'.$user->getUsername()) ,array('title'	=>	'Restore '.$user->getUsername() ))."&emsp;";
+	        								echo action_button('restore', site_url('admin/user/activate/'.$user->getUsername()) ,array('title'	=>	'Restore '.$user->getUsername() ))."&emsp;";
 										if(\App::isGranted('deleteUser'))
 	        								echo action_button('delete',site_url('admin/user/delete/'.$user->getUsername()) ,array('title'  =>  'Delete '.$user->getUsername().' permanently!' ))."&emsp;";
 	        							break;

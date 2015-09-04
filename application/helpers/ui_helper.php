@@ -67,6 +67,7 @@ function action_button($type,$link,$attr = array()){
 		'block'			=>	'ban',
 		'unblock'		=>  'check-square-o',
 		'wrench'		=> 	'wrench',
+		'restore'		=> 	'mail-reply',
 	);	
 	$icon = isset($map[$type]) ? $map[$type] : $type;
 	

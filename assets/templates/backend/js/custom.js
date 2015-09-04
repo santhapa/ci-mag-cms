@@ -19,6 +19,27 @@ $(document).ready(function(){
             $(this).parents('ul').css('display', 'block');
         }
     });
+
+    // alert box for actions delete/block/unblock
+    $('.fa-trash-o').click(function(){
+        return confirm('Are you sure to delete?');
+    });
+
+    $('.fa-remove').click(function(){
+        return confirm('Are you sure to remove permanently?');
+    });
+
+    $('.fa-ban').click(function(){
+        return confirm('Are you sure to block?');
+    });
+
+    $('.fa-check-square-o').click(function(){
+        return confirm('Are you sure to unblock?');
+    });
+
+    $('.fa-mail-reply').click(function(){
+        return confirm('Are you sure to restore?');
+    });
 });
 
 
