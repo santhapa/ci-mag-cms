@@ -9,6 +9,7 @@ class PrayerController extends Frontend_Controller {
 		$prayer = $prayerManager->getPrayerByDate(date('Y-m-d'));
 
 		$this->templateData['prayer'] = $prayer;
+		$this->templateData['pageTitle'] = "आजको प्रार्थना";
 		$this->templateData['content'] = 'prayer/index';
 
 		$this->load->view('frontend/main_layout', $this->templateData);

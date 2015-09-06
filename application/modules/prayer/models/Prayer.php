@@ -23,7 +23,7 @@ class Prayer
    	protected $date;
 
     /**
-    * @ORM\Column(type="string", name="`prayer_request`", nullable=false)
+    * @ORM\Column(type="string", length=10000, name="`prayer_request`", nullable=false)
     */
     protected $prayerRequest;
 
@@ -33,7 +33,7 @@ class Prayer
     protected $verse;
 
     /**
-    * @ORM\Column(type="string", name="`verse_message`", nullable=false)
+    * @ORM\Column(type="string", length=10000, name="`verse_message`", nullable=false)
     */
     protected $verseMessage;
 

@@ -1,61 +1,111 @@
+.nonborderbox *
+{
+-webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+      box-sizing: content-box;
+} 
+
 body{
 	background-color: #d2d6de;
 }
 
-.prayer-wrapper{
-	text-align: center;
-	margin: auto;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	font-weight: 600;
-	width: 60%;
-}
-
 .prayer-header{
+	background-color: #298bce;
+}
+
+.prayer-header img{
 	margin: auto;
-	display: inline-block;
+	padding-bottom: 15px;
+	padding-top: 15px;
 }
 
-.prayer-header h2 img{
-	width: 50px;
-	height: 50px;
+.prayer-todays{
 	margin: auto;
-	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
-.prayer-header h2{
-	font-size: 45px;
-	color: #8E8D8D;
-	font-weight: 500;
-}
-
-.prayer-header h2 span{
-	color: #3B7596;
+.prayer-todays h2{
+	color: #f3992f;
 }
 
 .prayer-message{
-	margin-top: 5px;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #ffffff;
+	width: 50%;
+	padding: 15px;
+	font-weight: bold;
+	font-size: 18px;
 	margin-bottom: 10px;
-}
-
-.prayer-message p{
-	margin-top: 10px;
-	margin-bottom: 10px;
-	font-size: 20px;
 }
 
 .prayer-image img{
 	margin: auto;
-	width: 100%;
+	width: 50%;
 }
 
 .prayer-verse{
-	margin-top: 15px;
-	font-size: 20px;
+	background-color: #c0e5ff;
+	margin: auto;
+	width: 50%;
+	padding: 15px;
+	font-size: 16px;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 15px;
 }
 
+.prayer-verse span{
+	display: block;
+}
+
+.prayer-verse .verse-message{
+	color: #333333;
+}
+
+.prayer-verse .verse{
+	color: #015b99;
+	text-decoration: underline;
+}
+
+.social-share{
+	margin: auto;
+	width: 50%;
+	margin-bottom: 20px;
+	text-align: center;
+	padding: 15px;
+}
+
+.comment-box{
+	margin: auto;
+	width: 50%;
+	margin-bottom: 20px;
+	background-color: #ffffff;
+	text-align: center;
+}
+
+
 @media (max-width: 768px) {
-	.prayer-wrapper{
-		width: 95%;
+	.prayer-message, .prayer-image img, .prayer-verse, .social-share, .comment-box{
+		width: 85%;
 	}
 }
+
+@media (max-width: 300px) {
+	.prayer-message, .prayer-image img, .prayer-verse, .social-share, .comment-box{
+		margin: 0px 0px;
+		width: auto;
+	}
+}
+
+
+/*.stButton .stFb, .stButton .stTwbutton, .stButton .stMainServices {
+	padding-bottom: 20px !important; 
+}
+
+.stButton .chicklets {
+	padding: 10px !important;
+}
+*/
