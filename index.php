@@ -1,4 +1,7 @@
 <?php
+
+ini_set('date.timezone', 'Asia/Kathmandu');
+
 /**
  * CodeIgniter
  *
