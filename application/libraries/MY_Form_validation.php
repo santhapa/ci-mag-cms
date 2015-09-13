@@ -58,14 +58,4 @@ class MY_Form_validation extends CI_Form_validation{
 
 		return ($group) ? false : true;
 	}
-
-	// for prayer request
-	function unique_date($date){
-		$this->CI->form_validation->set_message('unique_date',"The  prayer request for ($date)  has been added already.");
-
-		$prayerManager = $this->CI->container->get('prayer.prayer_manager');
-
-		$prayer = $prayerManager->getPrayerByDate($date);
-		return ($prayer) ? false : true;
-	}
 } 

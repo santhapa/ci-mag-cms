@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class DefaultController extends Frontend_Controller {
 
-	// alias for todays prayer
+	// alias for demo post
 	public function index()
 	{
-		echo Modules::run("prayer/todaysprayer");
+		echo Modules::run("demo/post/index");
 	}
 }
