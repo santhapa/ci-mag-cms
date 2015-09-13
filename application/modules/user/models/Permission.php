@@ -6,7 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="nim_permissions")
+ * @ORM\Table(name="mag_permissions")
  */
 class Permission
 {

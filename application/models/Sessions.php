@@ -8,7 +8,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="nim_sessions", 
+ * @ORM\Table(name="mag_sessions", 
  * 		indexes={@ORM\Index(name="timestamp", columns={"timestamp"})}
  * )
  */

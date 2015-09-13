@@ -8,7 +8,7 @@ use user\models\Group;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="nim_users")
+ * @ORM\Table(name="mag_users")
  */
 class User
 {

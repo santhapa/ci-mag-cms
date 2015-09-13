@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ci_post")
+ * @ORM\Table(name="demo_post")
  */
 class Post
 {

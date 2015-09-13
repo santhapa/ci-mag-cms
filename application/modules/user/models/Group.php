@@ -9,7 +9,7 @@ use user\models\Permission;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="nim_user_groups")
+ * @ORM\Table(name="mag_user_groups")
  */
 class Group
 {
