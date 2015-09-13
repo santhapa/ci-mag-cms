@@ -15,20 +15,6 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <?php if(\App::isGranted('viewPrayer')): ?>
-            <li class="treeview">
-                <a href="javascript.void(0)">
-                    <i class="fa fa-hand-rock-o"></i> <span>Prayers</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <?php if(\App::isGranted('addPrayer')): ?>
-                    <li><a href="<?php echo site_url('admin/prayer/add');?>"><i class="fa fa-circle-o"></i> Add Prayer Request</a></li>
-                    <?php endif; ?>
-                    <li><a href="<?php echo site_url('admin/prayer');?>"><i class="fa fa-circle-o"></i> View All</a></li>
-                </ul>
-            </li>
-            <?php endif; ?>
-
             <?php if(\App::isGranted(array('viewUser', 'viewUserGroup'))): ?>
             <li class="treeview">
                 <a href="javascript.void(0)">
