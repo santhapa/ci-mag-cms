@@ -3,6 +3,7 @@ namespace user\models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use user\models\Group;
 
@@ -137,6 +138,24 @@ class User
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
     **/
     protected $group;
+
+    /**
+    * @ORM\OneToMany(targetEntity="post\models\Post", mappedBy="author", cascade={"persist"})
+    */
+    protected $posts;
+
+    /**
+    *@ORM\OneToMany(targetEntity="post\models\Comment", mappedBy="user")
+    */
+    protected $comments;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
 
     public function getId()
     {
@@ -375,5 +394,15 @@ class User
     public function getGroup()
     {
         return $this->group;
+    }
+
+    public function addPost($post)
+    {
+        $this->posts[] = $post;
+    }
+
+    public function addComment($comment)
+    {
+        $this->comments[] = $comment;
     }
 }

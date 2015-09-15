@@ -38,7 +38,7 @@ class Group
 
 	/**
 	* @ORM\ManyToMany(targetEntity="user\models\Permission", cascade={"persist"})
-	* @ORM\JoinTable(name="nim_user_group_permission")
+	* @ORM\JoinTable(name="mag_user_group_permission")
 	*/
     private $permissions;
 

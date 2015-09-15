@@ -1,0 +1,19 @@
+services:
+    post.post_manager:
+        class: post\manager\PostManager
+        arguments: ["%entityManager%"]
+
+    post.category_manager:
+        class: post\manager\CategoryManager
+        arguments: ["%entityManager%"]
+
+    post.comment_manager:
+        class: post\manager\CommentManager
+        arguments: ["%entityManager%"]
+
+    post.post_type_manager:
+        class: post\manager\PostTypeManager
+        arguments: ["%entityManager%"]
+
+    post.rule_manager:
+        class: post\manager\ValidationRuleManager

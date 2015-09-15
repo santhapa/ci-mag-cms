@@ -1,0 +1,15 @@
+- {name: viewPost, description: "View posts." }
+- {name: addPost, description: "Create new post." }
+- {name: editPost, description: "Edit post content." }
+- {name: deletePost, description: "Delete post temporarily or permanently." }
+- {name: viewPostType, description: "View post type." }
+- {name: addPostType, description: "Create new post type." }
+- {name: editPostType, description: "Edit post type." }
+- {name: deletePostType, description: "Delete post type permanently." }
+- {name: viewCategory, description: "View posts category." }
+- {name: addCategory, description: "Create new post category." }
+- {name: editCategory, description: "Edit post category." }
+- {name: deleteCategory, description: "Delete category permanently." }
+- {name: addComment, description: "Add comment on post." }
+- {name: editComment, description: "Edit comment." }
+- {name: deleteComment, description: "Delete posted comment." }
