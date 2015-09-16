@@ -105,7 +105,7 @@ class PostTypeController extends Backend_Controller {
 
 	public function delete($slug)
 	{
-		if(!\App::isGranted('manageUserGroup')) redirect('admin/dashboard');
+		if(!\App::isGranted('deletePostType')) redirect('admin/dashboard');
 
 		try {
 			if(!$slug) throw new Exception("Error Processing Request.", 1);
