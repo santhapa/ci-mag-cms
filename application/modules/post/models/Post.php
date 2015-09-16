@@ -78,7 +78,7 @@ class Post
     protected $comments;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts")
+    * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts" , cascade={"persist"})
     * @ORM\JoinTable(name="mag_post_category")
     **/
     protected $categories;
@@ -212,7 +212,7 @@ class Post
         $this->categories[] = $cat;
     }
 
-    public function getCategory()
+    public function getCategorys()
     {
         return $this->categories;
     }

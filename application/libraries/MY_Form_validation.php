@@ -58,4 +58,24 @@ class MY_Form_validation extends CI_Form_validation{
 
 		return ($group) ? false : true;
 	}
+
+	function unique_post_type($name)
+	{
+		$this->CI->form_validation->set_message('unique_post_type',"Post type ({$name}) has been added already.");
+
+		$postTypeManager = $this->CI->container->get('post.post_type_manager');
+		$postType = $postTypeManager->getPostTypeByName($name);
+
+		return ($postType) ? false : true;
+	}
+
+	function unique_category($name)
+	{
+		$this->CI->form_validation->set_message('unique_category',"Category ({$name}) has been added already.");
+
+		$categoryManager = $this->CI->container->get('post.category_manager');
+		$cat = $categoryManager->getCategoryByName($name);
+
+		return ($cat) ? false : true;
+	}
 } 

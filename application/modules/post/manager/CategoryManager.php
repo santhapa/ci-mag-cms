@@ -71,4 +71,9 @@ class CategoryManager{
 	{
 		return $this->em->getRepository("\post\models\Category")->findOneBy(array('slug'=>$slug));
 	}
+
+	public function getCategoryByName($name)
+	{
+		return $this->em->getRepository("\post\models\Category")->findOneBy(array('name'=>$name));
+	}
 }

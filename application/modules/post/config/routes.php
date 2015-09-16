@@ -15,7 +15,7 @@ $route['admin/post/type/delete/(.+)'] = 'post/admin/postType/delete/$1';
 
 $route['admin/post/category'] = 'post/admin/category/index';
 $route['admin/post/category/add'] = 'post/admin/category/add';
-$route['admin/post/catgory/edit/(.+)'] = 'post/admin/category/edit/$1';
+$route['admin/post/category/edit/(.+)'] = 'post/admin/category/edit/$1';
 $route['admin/post/catgory/delete/(.+)'] = 'post/admin/category/delete/$1';
 
 

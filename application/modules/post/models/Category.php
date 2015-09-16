@@ -3,6 +3,7 @@
 namespace post\models;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -31,7 +32,7 @@ class Category
     protected $slug;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Post", mappedBy="category", cascade={"persist"})
+    * @ORM\ManyToMany(targetEntity="Post", mappedBy="categories", cascade={"persist"})
     **/
     protected $posts;
 
@@ -47,7 +48,7 @@ class Category
 
     public function setName($name)
     {
-    	$this->name = $name;
+    	$this->name = ucfirst(strtolower($name));
     }
 
     public function getName()
