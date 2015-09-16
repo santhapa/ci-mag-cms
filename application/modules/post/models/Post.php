@@ -44,7 +44,7 @@ class Post
     protected $updatedAt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="PostType")
+    * @ORM\ManyToOne(targetEntity="PostType", inversedBy="posts", cascade={"persist"})
     * @ORM\JoinColumn(name="post_type_id", referencedColumnName="id", onDelete="SET NULL")
     */
     protected $postType;

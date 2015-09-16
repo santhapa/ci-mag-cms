@@ -71,4 +71,9 @@ class PostTypeManager{
 	{
 		return $this->em->getRepository("\post\models\PostType")->findOneBy(array('slug'=>$slug));
 	}
+
+	public function getPostTypeByName($name)
+	{
+		return $this->em->getRepository("\post\models\PostType")->findOneBy(array('name'=>$name));
+	}
 }

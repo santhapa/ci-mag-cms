@@ -3,6 +3,7 @@
 namespace post\models;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -19,7 +20,7 @@ class PostType
     private $id;
 
     /**
-    * @ORM\Column(type="string", length=255)
+    * @ORM\Column(type="string", length=255, unique=true)
     */
     protected $name;
 
@@ -30,7 +31,17 @@ class PostType
     */
     protected $slug;
 
-  
+    /**
+    *@ORM\OneToMany(targetEntity="Post", mappedBy="postType")
+    */
+    protected $posts;
+
+    
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
+
     public function getId()
     {
     	return $this->id;
@@ -38,7 +49,7 @@ class PostType
 
     public function setName($name)
     {
-    	$this->name = $name;
+    	$this->name = strtolower($name);
     }
 
     public function getName()
@@ -54,5 +65,10 @@ class PostType
     public function getSlug()
     {
     	return $this->slug;
+    }
+
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

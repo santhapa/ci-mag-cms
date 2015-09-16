@@ -8,9 +8,14 @@ $route['admin/post/restore/(.+)'] = 'post/admin/post/restore/$1';
 $route['admin/post/trash/(.+)'] = 'post/admin/post/trash/$1';
 $route['admin/post/delete/(.+)'] = 'post/admin/post/delete/$1';
 
+$route['admin/post/type'] = 'post/admin/postType/index';
+$route['admin/post/type/add'] = 'post/admin/postType/add';
+$route['admin/post/type/edit/(.+)'] = 'post/admin/postType/edit/$1';
+$route['admin/post/type/delete/(.+)'] = 'post/admin/postType/delete/$1';
+
 $route['admin/post/category'] = 'post/admin/category/index';
 $route['admin/post/category/add'] = 'post/admin/category/add';
 $route['admin/post/catgory/edit/(.+)'] = 'post/admin/category/edit/$1';
-$route['admin/post/catgory/restore/(.+)'] = 'post/admin/category/restore/$1';
-$route['admin/post/catgory/trash/(.+)'] = 'post/admin/category/trash/$1';
 $route['admin/post/catgory/delete/(.+)'] = 'post/admin/category/delete/$1';
+
+
