@@ -35,6 +35,9 @@ class PostController extends Backend_Controller {
 
 	public function add()
 	{
+		try {
+			
+		
 		if(!\App::isGranted('addPost')) redirect('admin/dashboard');
 		// get post types and categories from helper
 		$postTypes = getPostTypes();
@@ -46,14 +49,14 @@ class PostController extends Backend_Controller {
 			$ruleManager = $this->container->get('post.rule_manager');
 			$post = $postManager->createPost();
 
-			$this->form_validation->set_rules($ruleManager->getRules(array('title', 'content', 'postType', 'category')));
+			$this->form_validation->set_rules($ruleManager->getRules(array('title')));
 
 			if($this->form_validation->run($this))
 			{
 				$post->setTitle($this->input->post('title'));
 				$post->setContent($this->input->post('content'));
 
-				$postTypeManager = $CI->container->get('post.post_type_manager');
+				$postTypeManager = $this->container->get('post.post_type_manager');
 				if($this->input->post('postType'))
 				{
 					$postType = $postTypeManager->getPostTypeById($this->input->post('postType'));
@@ -62,7 +65,7 @@ class PostController extends Backend_Controller {
 				}
 				$post->setPostType($postType);
 
-				$categoryManager = $CI->container->get('post.category_manager');
+				$categoryManager = $this->container->get('post.category_manager');
 				if($this->input->post('category')){
 					foreach ($this->input->post('category') as $id) {
 						$cat = $categoryManager->getCategoryById($id);
@@ -73,7 +76,7 @@ class PostController extends Backend_Controller {
 					$post->addCategory($cat);
 				}
 
-				if($this->input->post('save'))
+				if($this->input->post('btnSave'))
 				{
 					$post->saveToDraft();
 				}else{
@@ -93,5 +96,8 @@ class PostController extends Backend_Controller {
 		$this->templateData['pageTitle'] = 'Add Post';
 		$this->templateData['content'] = 'post/new';
 		$this->load->view('backend/main_layout', $this->templateData);
+		} catch (Exception $e) {
+			echo $e->getMessage(); exit;
+		}
 	}
 }

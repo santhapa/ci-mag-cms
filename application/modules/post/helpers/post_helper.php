@@ -22,7 +22,7 @@ function defaultPostType()
 {
 	$CI = &get_instance();
 	$postTypeManager = $CI->container->get('post.post_type_manager');
-	$postType = $postTypeManager->getPostTypeBySlug('general'));
+	$postType = $postTypeManager->getPostTypeBySlug('general');
 
 	return $postType;
 }
