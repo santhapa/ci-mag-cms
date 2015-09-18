@@ -68,7 +68,7 @@ class Category
 
     public function addPost(Post $post)
     {
-        $post->addCategory($this);
+        // $post->addCategory($this);
         $this->posts[] = $post;
     }
 

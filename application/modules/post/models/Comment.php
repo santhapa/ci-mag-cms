@@ -116,7 +116,7 @@ class Comment
 
 	public function setUser($user)
     {
-        $user->addComment($this);
+        // $user->addComment($this);
         $this->user = $user;
     }
 
@@ -127,7 +127,7 @@ class Comment
 
     public function setPost($post)
     {
-        $post->addComment($this);
+        // $post->addComment($this);
         $this->post = $post;
     }
 
