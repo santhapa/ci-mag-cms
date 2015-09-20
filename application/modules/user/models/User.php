@@ -145,7 +145,7 @@ class User
     protected $posts;
 
     /**
-    *@ORM\OneToMany(targetEntity="post\models\Comment", mappedBy="user")
+    *@ORM\OneToMany(targetEntity="comment\models\Comment", mappedBy="user")
     */
     protected $comments;
 
@@ -396,12 +396,12 @@ class User
         return $this->group;
     }
 
-    public function addPost($post)
+    public function addPost(\post\models\Post $post)
     {
         $this->posts[] = $post;
     }
 
-    public function addComment($comment)
+    public function addComment(\comment\models\Comment $comment)
     {
         $this->comments[] = $comment;
     }
