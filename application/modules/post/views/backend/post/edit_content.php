@@ -1,3 +1,6 @@
+<script src="<?php echo base_url()?>/bower_components/tagmanager/tagmanager.js"></script>
+<link href="<?php echo base_url()?>/bower_components/tagmanager/tagmanager.css" rel="stylesheet" type="text/css" />
+
 <form class="form-horizontal validate" action="" method="post">
     <div class="box-body">
         <div class="row">
@@ -86,6 +89,12 @@
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input id="tags" type="text" class="form-control tag-input" value="" placeholder="Tags"/>
+                                <?php echo form_error('tags'); ?>
+                            </div>                            
+                        </div>
                     </div>              
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -101,3 +110,21 @@
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+    $(function(){
+        var tags = "<?php echo set_value('tags')?:$oldTags; ?>";
+        var preSet = Array();
+        preSet = tags.split(',');
+    
+        $("#tags").tagsManager({
+            prefilled: preSet,
+            CapitalizeFirstLetter: false,
+            hiddenTagListName: 'tags',
+            deleteTagsOnBackspace: true,
+            tagsContainer: null,
+            tagCloseIcon: '×',
+            tagClass: 'tag-input'
+        });
+    });
+</script>

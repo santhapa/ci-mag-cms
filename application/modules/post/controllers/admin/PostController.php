@@ -76,6 +76,25 @@ class PostController extends Backend_Controller {
 						$post->addCategory($cat);
 					}
 
+					if($this->input->post('tags'))
+					{
+						$tags = explode(',', $this->input->post('tags'));
+						$dbTags = getAllTags();
+						$tagManager = $this->container->get('post.tag_manager');
+						foreach ($tags as $tag) {
+							if(!in_array($tag, $dbTags) && $tag)
+							{
+								$newTag = $tagManager->createTag();
+								$newTag->setName($tag);
+								$tagManager->updateTag($newTag);
+								$tag = $newTag;
+							}else{
+								$tag = $tagManager->getTagByName($tag);
+							}
+							if($tag)	$post->addTag($tag);
+						}
+					}
+
 					if($this->input->post('btnSave'))
 					{
 						$post->saveToDraft();
@@ -116,6 +135,14 @@ class PostController extends Backend_Controller {
 			$postManager = $this->container->get('post.post_manager');
 			$post = $postManager->getPostBySlug($slug);
 
+			$oTags = $post->getTags();
+			$oldTags = '';
+
+			foreach ($oTags as $i=>$tag) {
+				$oldTags .= $tag->getName();
+				if($i !=count($oTags)) $oldTags.=',';
+			}
+
 			if(!$post) throw new Exception("Post not found.", 1);
 
 			if($post->isTrashed()) throw new Exception("Post has been deleted already.", 1);			
@@ -151,6 +178,27 @@ class PostController extends Backend_Controller {
 					}
 					$post->setCategorys($cats);
 
+					if($this->input->post('tags'))
+					{
+						$tags = explode(',', $this->input->post('tags'));
+						$dbTags = getAllTags();
+						$postTags = array();
+						$tagManager = $this->container->get('post.tag_manager');
+						foreach ($tags as $tag) {
+							if(!in_array($tag, $dbTags) && $tag)
+							{
+								$newTag = $tagManager->createTag();
+								$newTag->setName($tag);
+								$tagManager->updateTag($newTag);
+								$tag = $newTag;
+							}else{
+								$tag = $tagManager->getTagByName($tag);
+							}
+							if($tag)	$postTags[] = $tag;
+						}
+						$post->setTags($postTags);
+					}
+
 					$postManager->updatePost($post);
 
 					$this->session->setFlashMessage('feedback', "Post ({$post->getTitle()}) has been updated.", 'success');
@@ -161,6 +209,7 @@ class PostController extends Backend_Controller {
 			$this->breadcrumbs->push('Edit', current_url());
 			$this->templateData['postTypes'] = $postTypes;
 			$this->templateData['post'] = $post;
+			$this->templateData['oldTags'] = $oldTags;
 			$this->templateData['categorys'] = $categorys;
 			$this->templateData['pageTitle'] = 'Edit Post';
 			$this->templateData['content'] = 'post/edit';

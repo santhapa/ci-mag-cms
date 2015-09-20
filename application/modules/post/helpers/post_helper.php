@@ -35,3 +35,17 @@ function defaultCategory()
 
 	return $categorys;
 }
+
+function getAllTags()
+{
+	$CI = &get_instance();
+	$tagManager = $CI->container->get('post.tag_manager');
+
+	$tags = $tagManager->getTags();
+	$tagArray = array();
+	foreach ($tags as $tag) {
+		$tagArray[] = $tag->getName();
+	}
+
+	return $tagArray;
+}

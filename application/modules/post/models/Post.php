@@ -83,10 +83,17 @@ class Post
     **/
     protected $categories;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"})
+    * @ORM\JoinTable(name="mag_post_tag")
+    **/
+    protected $tags;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId()
@@ -195,7 +202,7 @@ class Post
         return $this->author;
     }
 
-    public function addComment(comment\models\Comment $comment)
+    public function addComment(\comment\models\Comment $comment)
     {
         $comment->addPost($this);
         $this->comments[] = $comment;
@@ -220,6 +227,22 @@ class Post
     public function getCategorys()
     {
         return $this->categories;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag)
+    {
+        $tag->addPost($this);
+        $this->tags[] = $tag;
+    }
+
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
     }
 
     // public function getFeaturedImage()

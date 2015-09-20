@@ -49,7 +49,7 @@ class Comment
 /*======================================================================================*/
 
 	/**
-	*@ORM\ManyToOne(targetEntity="post/modesl/Post", inversedBy="comments")
+	*@ORM\ManyToOne(targetEntity="post\models\Post", inversedBy="comments")
 	*@ORM\JoinColumn(nullable=true, onDelete="CASCADE")
 	**/
 	protected $post;

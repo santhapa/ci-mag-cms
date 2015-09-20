@@ -11,5 +11,9 @@ services:
         class: post\manager\PostTypeManager
         arguments: ["%entityManager%"]
 
+    post.tag_manager:
+        class: post\manager\TagManager
+        arguments: ["%entityManager%"]
+
     post.rule_manager:
         class: post\manager\ValidationRuleManager
