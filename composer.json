@@ -16,7 +16,8 @@
 		"swiftmailer/swiftmailer": "5.4.1",
 		"maltyxx/restserver": "^1.3",
 		"maltyxx/restclient": "^2.2",
-		"phpoffice/phpexcel": "1.8.1"
+		"phpoffice/phpexcel": "1.8.1",
+		"studio-42/elfinder": "2.x-dev"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"
