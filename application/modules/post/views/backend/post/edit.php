@@ -5,11 +5,11 @@
             <div class="box box-solid box-mag">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <strong>Edit Category <em>(<?php echo $category->getName();?>)</em></strong>
+                        <strong>Edit Post <em>(<?php echo $post->getTitle();?>)</em></strong>
                     </h3>
                 </div><!-- /.box-header -->
 
-                <?php $this->load->view($modulePath.'category/edit_content'); ?>
+                <?php $this->load->view($modulePath.'post/edit_content'); ?>
 
             </div><!-- /.box -->
         </div><!-- /.col -->

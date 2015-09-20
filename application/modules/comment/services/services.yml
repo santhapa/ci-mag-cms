@@ -1,0 +1,7 @@
+services:
+    comment.comment_manager:
+        class: comment\manager\CommentManager
+        arguments: ["%entityManager%"]
+
+    comment.rule_manager:
+        class: comment\manager\ValidationRuleManager

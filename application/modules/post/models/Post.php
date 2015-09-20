@@ -73,7 +73,7 @@ class Post
     protected $author;
 
     /**
-    *@ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+    *@ORM\OneToMany(targetEntity="comment\models\Comment", mappedBy="post")
     */
     protected $comments;
 
@@ -146,7 +146,7 @@ class Post
 
     public function activate()
     {
-        $this->status = STATUS_ACTIVE;
+        $this->status = self::STATUS_ACTIVE;
     }
 
     public function isActive()
@@ -164,7 +164,7 @@ class Post
         return ($this->status == self::STATUS_DRAFT) ? true : false;
     }
 
-    public function setPostType($pt)
+    public function setPostType(PostType $pt)
     {
         $this->postType = $pt;
     }
@@ -184,7 +184,7 @@ class Post
         return $this->slug;
     }
 
-    public function setAuthor($author)
+    public function setAuthor(\user\models\User $author)
     {
         $author->addPost($this);
         $this->author = $author;
@@ -195,7 +195,7 @@ class Post
         return $this->author;
     }
 
-    public function addComment($comment)
+    public function addComment(comment\models\Comment $comment)
     {
         $comment->addPost($this);
         $this->comments[] = $comment;
@@ -210,6 +210,11 @@ class Post
     {
         $cat->addPost($this);
         $this->categories[] = $cat;
+    }
+
+    public function setCategorys($cats)
+    {
+        $this->categories = $cats;
     }
 
     public function getCategorys()

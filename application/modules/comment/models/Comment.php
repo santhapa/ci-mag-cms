@@ -1,5 +1,5 @@
 <?php
-namespace post\models;
+namespace comment\models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
 * @ORM\Entity
-* @ORM\Table(name="mag_post_comments")
+* @ORM\Table(name="mag_comments")
 */
 class Comment
 {
@@ -49,7 +49,7 @@ class Comment
 /*======================================================================================*/
 
 	/**
-	*@ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+	*@ORM\ManyToOne(targetEntity="post/modesl/Post", inversedBy="comments")
 	*@ORM\JoinColumn(nullable=true, onDelete="CASCADE")
 	**/
 	protected $post;
@@ -104,7 +104,7 @@ class Comment
     	return $this->parent;
     }
 
-    public function setChildren($id)
+    public function setChildren(Comment $id)
     {
     	$this->children = $id;
     }
@@ -114,7 +114,7 @@ class Comment
     	return $this->children;
     }
 
-	public function setUser($user)
+	public function setUser(\user\models\User $user)
     {
         // $user->addComment($this);
         $this->user = $user;
@@ -125,7 +125,7 @@ class Comment
         return $this->user;
     }
 
-    public function setPost($post)
+    public function setPost(\post\models\Post $post)
     {
         // $post->addComment($this);
         $this->post = $post;

@@ -40,6 +40,10 @@ $(document).ready(function(){
     $('.fa-mail-reply').click(function(){
         return confirm('Are you sure to restore?');
     });
+
+    $('.fa-thumbs-o-up').click(function(){
+        return confirm('Are you sure to publish?');
+    });
 });
 
 

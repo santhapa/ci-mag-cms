@@ -7,10 +7,6 @@ services:
         class: post\manager\CategoryManager
         arguments: ["%entityManager%"]
 
-    post.comment_manager:
-        class: post\manager\CommentManager
-        arguments: ["%entityManager%"]
-
     post.post_type_manager:
         class: post\manager\PostTypeManager
         arguments: ["%entityManager%"]

@@ -94,7 +94,7 @@
     <div class="box-footer clearfix">
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8">
-                <!-- <button type="submit" class="btn btn-info" name="btnSave" value="Save">Save</button> -->
+                <button type="submit" class="btn btn-info" name="btnSave" value="Save">Save</button>
                 <button type="submit" class="btn btn-primary" name="btnPublish" value="Publish">Publish</button>
                 <a href="<?php echo site_url('admin/post')?>" class="btn btn-danger">Cancel</a>
             </div>

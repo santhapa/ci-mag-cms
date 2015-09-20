@@ -259,9 +259,9 @@ class User
 
     public function getName()
     {
-        if($this->firstname && $this->lastname)
+        if($this->firstname || $this->lastname)
         {
-            return $this->firstname." ".$this->lastname;
+            return trim($this->firstname." ".$this->lastname);
         }
         return null;
     }

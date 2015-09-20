@@ -1,0 +1,3 @@
+- {name: addComment, description: "Add comment on post." }
+- {name: editComment, description: "Edit comment." }
+- {name: deleteComment, description: "Delete posted comment." }

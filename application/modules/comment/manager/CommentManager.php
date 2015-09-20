@@ -1,9 +1,9 @@
 <?php
 
-namespace post\manager;
+namespace comment\manager;
 
 use Doctrine\ORM\EntityManager;
-use post\models\Comment;
+use comment\models\Comment;
 
 class CommentManager{
 
@@ -41,7 +41,7 @@ class CommentManager{
 		if($array)
 		{
 			return $this->em
-               ->getRepository('\post\models\Comment')
+               ->getRepository('\comment\models\Comment')
                ->createQueryBuilder('c')
                ->select('c')
                ->where('c.id = :cmt')
@@ -49,6 +49,6 @@ class CommentManager{
                ->getQuery()
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 		}
-		return $this->em->getRepository("post\models\Comment")->findOneBy(array('id'=>$id));
+		return $this->em->getRepository("comment\models\Comment")->findOneBy(array('id'=>$id));
 	}
 }
