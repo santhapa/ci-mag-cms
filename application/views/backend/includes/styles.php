@@ -48,3 +48,11 @@
 
 <!-- jQuery 2.1.4 -->
 <script src="<?php echo base_url()?>/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
+<!-- jQuery UI 1.11.4 -->
+<script src="<?php echo base_url()?>/bower_components/admin-lte/plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
