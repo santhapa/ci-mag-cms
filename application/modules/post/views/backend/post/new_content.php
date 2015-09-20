@@ -1,6 +1,14 @@
 <script src="<?php echo base_url()?>/bower_components/tagmanager/tagmanager.js"></script>
 <link href="<?php echo base_url()?>/bower_components/tagmanager/tagmanager.css" rel="stylesheet" type="text/css" />
 
+<script src="<?php echo base_url()?>assets/templates/backend/plugins/ckeditor/ckeditor.js"></script>
+
+<style type="text/css">
+    label{
+        font-weight: normal;
+    }
+</style>
+
 <form class="form-horizontal validate" action="<?php echo site_url('admin/post/add'); ?>" method="post">
     <div class="box-body">
         <div class="row">
@@ -14,14 +22,14 @@
                     <div class="box-body">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input id="title" type="text" name="title" class="form-control required" value="<?php echo set_value('title'); ?>" placeholder="Posts Title" required/>
+                                <input id="title" type="text" name="title" class="form-control required" required value="<?php echo set_value('title'); ?>" placeholder="Posts Title" required/>
                                 <?php echo form_error('title'); ?>
                             </div>                            
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <textarea class="form-control" name="content" cols="10" rows="10" placeholder="Write content here"></textarea>   
+                                <textarea class="form-control required" id="content-editor" name="content" cols="10" rows="10" placeholder="Write content here"></textarea>   
                             </div>                        
                         </div>
 
@@ -52,7 +60,7 @@
                         <?php foreach ($postTypes as $pt): ?>
                             <div class="form-group">
                                 <div class="col-sm-8">
-                                    <input type="radio" id="<?php echo $pt->getName().$pt->getId(); ?>" class="required" name="postType" 
+                                    <input type="radio" id="<?php echo $pt->getName().$pt->getId(); ?>" name="postType" 
                                         <?php echo set_radio('postType', $pt->getId()); ?> value="<?php echo $pt->getId(); ?>">&emsp;
                                     <label for="<?php echo $pt->getName().$pt->getId(); ?>"><?php echo ucfirst($pt->getName()); ?></label>                       
                                 </div>
@@ -71,7 +79,7 @@
                         <?php foreach ($categorys as $cat): ?>
                             <div class="form-group">
                                 <div class="col-sm-8">
-                                    <input type="checkbox" id="<?php echo $cat->getName().$cat->getId(); ?>" class="required" name="category[]" 
+                                    <input type="checkbox" id="<?php echo $cat->getName().$cat->getId(); ?>" name="category[]" 
                                         <?php echo set_checkbox('category[]', $cat->getId()); ?> value="<?php echo $cat->getId(); ?>">&emsp;
                                     <label for="<?php echo $cat->getName().$cat->getId(); ?>"><?php echo ucfirst($cat->getName()); ?></label>                       
                                 </div>
@@ -126,4 +134,8 @@
             tagClass: 'tag-input'
         });
     });
+</script>
+
+<script type="text/javascript">
+    CKEDITOR.replace('content-editor');
 </script>
