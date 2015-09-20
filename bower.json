@@ -20,6 +20,7 @@
     "jquery-validation": "~1.14.0",
     "ionicons": "~2.0.1",
     "noty": "~2.3.6",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "tagmanager": "max-favilli/tagmanager#~3.0.2"
   }
 }
