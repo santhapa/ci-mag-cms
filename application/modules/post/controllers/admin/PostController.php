@@ -199,6 +199,11 @@ class PostController extends Backend_Controller {
 						$post->setTags($postTags);
 					}
 
+					if($this->input->post('btnPublish') && $post->isDraft())
+					{
+						$post->activate();
+					}
+
 					$postManager->updatePost($post);
 
 					$this->session->setFlashMessage('feedback', "Post ({$post->getTitle()}) has been updated.", 'success');
