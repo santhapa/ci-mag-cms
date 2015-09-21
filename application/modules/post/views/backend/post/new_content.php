@@ -39,11 +39,17 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Post Media<small>&emsp;<em>(<span id="meta-option"></span>)</em>)</small></strong>
+                            <strong>Post Media</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input id="meta" type="hidden" name="meta" class="form-control" value="<?php echo set_value('title'); ?>"/>
+                                <button id="elfinder_browse" class="btn btn-primary">Browse Server</button>
+                            </div>                            
+                        </div>
+                        <div id="preview"></div>
                     </div>
                 </div><!-- /.box -->
 
@@ -140,6 +146,32 @@
 
 <script type="text/javascript">
     CKEDITOR.replace('content-editor',{
-        filebrowserBrowseUrl : '<?php echo site_url("elfinder/browse"); ?>'
+        filebrowserImageBrowseUrl : '<?php echo site_url("elfinder/ckeditor"); ?>'
     });
+</script>
+
+<script type="text/javascript">
+    
+    $(function(){
+        //elfinder form url 
+        $('#elfinder_browse').on("click",function() {
+            var input = $(this).prev('input');
+            var id = $(input).attr('id');
+            var childWin = window.open("<?php echo site_url('elfinder/image'); ?>"+"?id="+id, "popupWindow", "height=450, width=900");
+            
+            $('input#'+id).on('change', function(){
+                var src = $(this).val();
+                if(src)
+                {
+                    $('#preview').html('<img class="img-responsive img-rounded" src="'+src+'">');
+                }
+            });
+
+            return false;
+        });
+    });
+
+    function setValue(value, element_id) {
+        $((element_id ? 'input#'+ element_id : '')).val(value).change();
+    }
 </script>
