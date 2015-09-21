@@ -136,6 +136,10 @@
     });
 </script>
 
+<?php  ?>
+
 <script type="text/javascript">
-    CKEDITOR.replace('content-editor');
+    CKEDITOR.replace('content-editor',{
+        filebrowserBrowseUrl : '<?php echo site_url("elfinder/browse"); ?>'
+    });
 </script>
