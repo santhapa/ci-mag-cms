@@ -154,8 +154,13 @@
     
     $(function(){
         postType =  'general';
+        prevSrc = {general:'', audio:'', video:'', gallery:''};
+
         $('input[name=postType]').change(function(){
             postType = $(this).attr('id');
+            $('input#meta').val(prevSrc[postType]);
+
+            preview(postType, prevSrc[postType]);
         });
 
         //elfinder form url 
@@ -193,15 +198,40 @@
             
             $('input#'+id).on('change', function(){
                 var src = $(this).val();
-                if(src)
-                {
-                    $('#preview').html('<img class="img-responsive img-rounded" src="'+src+'">');
-                }
+                prevSrc[postType] = src;
+
+                preview(postType, src);
             });
 
             return false;
         });
     });
+
+    function preview(pt, src)
+    {   
+        if(typeof src !== 'undefined' && src){
+            if(pt == 'general'){
+                $('#preview').html('<img class="img-responsive img-rounded" src="'+src+'">');
+            }else if(pt == 'audio'){
+                $('#preview').html('<audio controls="controls"><source src="'+src+'" type="audio/mpeg"></audio>');
+            }else if(pt == 'video'){
+                 $('#preview').html('<video width="320" height="240" controls><source src="'+src+'"type="video/mp4"></video>');
+            }else if(pt == 'gallery'){
+                var previewImgs ='';
+                var imgs = src.split(',');
+                for(var i=0; i< imgs.length; i++)
+                {
+                    previewImgs+='<img style="width: 120px; margin:10px" class="img-responsive img-thumbnail" src="'+imgs[i]+'">';
+                }
+                $('#preview').html(previewImgs);
+            }else{
+                $('#preview').html('<small><em>Preview not available!</em></small>');
+            }
+        }else{
+            $('#preview').html('<small><em>Preview not available!</em></small>');
+        }
+        
+    }
 
     function setValue(value, element_id) {
         $((element_id ? 'input#'+ element_id : '')).val(value).change();
