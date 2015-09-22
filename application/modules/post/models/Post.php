@@ -14,6 +14,13 @@ class Post
     const STATUS_DRAFT = 1;
     const STATUS_ACTIVE = 2;
     const STATUS_TRASH = 3;
+
+    public static $statusTypes = array(
+        self::STATUS_DRAFT => 'On Draft',
+        self::STATUS_ACTIVE => 'Published',
+        self::STATUS_TRASH => 'Trashed'
+    );
+    
 	/**
 	* @ORM\Column(type="integer")
 	* @ORM\Id

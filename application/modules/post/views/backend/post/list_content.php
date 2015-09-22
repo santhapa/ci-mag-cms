@@ -8,6 +8,7 @@
 				<th>Category</th>
 				<th>Author</th>
 				<th>Posted On</th>
+				<th>Status</th>
 				<th width="15%">Action</th>
 			</tr>
 		</thead>
@@ -39,6 +40,7 @@
 					</td>
 					<td><?php echo $post->getAuthor()->getName()?:$post->getAuthor()->getUsername(); ?></td>
 					<td><?php echo $post->getCreatedAt()->format('F j, Y'); ?></td>
+					<td><?php echo \post\models\Post::$statusTypes[$post->getStatus()]; ?></td>
 					<td>
 						<!-- <strong><em>This is you!</em></strong> -->
 						<?php
@@ -91,6 +93,7 @@
 				<th>Category</th>
 				<th>Author</th>
 				<th>Posted On</th>
+				<th>Status</th>
 				<th>Action</th>
 			</tr>
 		</tfoot>
