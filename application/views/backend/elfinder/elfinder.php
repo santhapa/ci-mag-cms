@@ -1,11 +1,30 @@
 <script type="text/javascript" charset="utf-8">
     $().ready(function() {
         var id = getURLParameter('id');
+        var selectMultiple = getURLParameter('multiple')? true : false;
 
         var $f = $('.elfinder').elfinder({
             url : '<?php echo site_url("elfinder/init/".$mode); ?>',
+            commandsOptions : {
+                // configure value for "getFileCallback" used for editor integration
+                getfile : {
+                    // allow to return multiple files info
+                    multiple : selectMultiple,
+                }
+            },
             getFileCallback: function(file) {
-                window.opener.setValue(file.url, id);
+
+                if(selectMultiple)
+                {
+                    var urlArray = [];
+                    file.forEach(function(f) {
+                        urlArray.push(f.url);
+                    });
+                    var fileUrl = urlArray.join();
+                }else{
+                    var fileUrl = file.url;
+                }
+                window.opener.setValue(fileUrl, id);
                 window.close();
             }
         });

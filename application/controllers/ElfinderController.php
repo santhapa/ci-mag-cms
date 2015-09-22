@@ -10,6 +10,16 @@ class ElfinderController extends MY_Controller {
 		'allowedTypes' => array('image/png', 'image/jpeg', 'image/gif')
 	);
 
+	protected $audio = array(
+		'filePath' => 'assets/uploads/audio/',
+		'allowedTypes' => array()
+	);
+
+	protected $video = array(
+		'filePath' => 'assets/uploads/video/',
+		'allowedTypes' => array()
+	);
+
 	public function __construct()
 	{		
 		$this->templateData['pageTitle'] = "";
@@ -41,7 +51,12 @@ class ElfinderController extends MY_Controller {
 			case 'image':
 				$options = $this->image;
 				break;
-			
+			case 'audio':
+				$options = $this->audio;
+				break;
+			case 'video':
+				$options = $this->video;
+				break;			
 			default:
 				$options = array();
 				break;
@@ -77,7 +92,23 @@ class ElfinderController extends MY_Controller {
 	public function image()
 	{
 		$this->templateData['mode'] = 'image';
-		$this->templateData['pageTitle'] = 'Elfinder';
+		$this->templateData['pageTitle'] = 'Image';
+		$this->templateData['content'] = 'elfinder/elfinder';
+		return $this->load->view('backend/elfinder_layout', $this->templateData);
+	}
+
+	public function audio()
+	{
+		$this->templateData['mode'] = 'audio';
+		$this->templateData['pageTitle'] = 'Audio';
+		$this->templateData['content'] = 'elfinder/elfinder';
+		return $this->load->view('backend/elfinder_layout', $this->templateData);
+	}
+
+	public function video()
+	{
+		$this->templateData['mode'] = 'video';
+		$this->templateData['pageTitle'] = 'Video';
 		$this->templateData['content'] = 'elfinder/elfinder';
 		return $this->load->view('backend/elfinder_layout', $this->templateData);
 	}

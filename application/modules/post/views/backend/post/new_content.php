@@ -39,7 +39,7 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Post Media</strong>
+                            <strong>Media Manager</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
@@ -66,9 +66,9 @@
                         <?php foreach ($postTypes as $pt): ?>
                             <div class="form-group">
                                 <div class="col-sm-8">
-                                    <input type="radio" id="<?php echo $pt->getName().$pt->getId(); ?>" name="postType" 
+                                    <input type="radio" id="<?php echo $pt->getName(); ?>" name="postType" 
                                         <?php echo set_radio('postType', $pt->getId()); ?> value="<?php echo $pt->getId(); ?>">&emsp;
-                                    <label for="<?php echo $pt->getName().$pt->getId(); ?>"><?php echo ucfirst($pt->getName()); ?></label>                       
+                                    <label for="<?php echo $pt->getName(); ?>"><?php echo ucfirst($pt->getName()); ?></label>                       
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -153,11 +153,43 @@
 <script type="text/javascript">
     
     $(function(){
+        postType =  'general';
+        $('input[name=postType]').change(function(){
+            postType = $(this).attr('id');
+        });
+
         //elfinder form url 
         $('#elfinder_browse').on("click",function() {
             var input = $(this).prev('input');
             var id = $(input).attr('id');
-            var childWin = window.open("<?php echo site_url('elfinder/image'); ?>"+"?id="+id, "popupWindow", "height=450, width=900");
+            var url = "<?php echo site_url('elfinder/image'); ?>";
+            var param = "id="+id;
+            switch(postType)
+            {
+                case 'general':{
+                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    break;
+                }
+                case 'audio':{
+                    url = "<?php echo site_url('elfinder/audio'); ?>";
+                    break;
+                }
+                case 'video':{
+                    url = "<?php echo site_url('elfinder/video'); ?>";
+                    break;
+                }
+                case 'gallery':{
+                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    param = "id="+id+"&multiple=true";
+                    break;
+                }
+                default:{
+                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    break;
+                }
+            }
+
+            var childWin = window.open(url+"?"+param, "popupWindow", "height=450, width=900");
             
             $('input#'+id).on('change', function(){
                 var src = $(this).val();
