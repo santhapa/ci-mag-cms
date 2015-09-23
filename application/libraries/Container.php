@@ -20,8 +20,12 @@ class Container
 
 		foreach (glob(APPPATH.'modules/*/services', GLOB_ONLYDIR) as $m)
 		{
-			$loader = new YamlFileLoader($container, new FileLocator($m.'/'));
-			$loader->load('services.yml');
+			if(file_exists($m.'/services.yml'))
+			{
+				$loader = new YamlFileLoader($container, new FileLocator($m.'/'));
+				$loader->load('services.yml');
+			}
+			
 		}
 		
 		$this->container = $container;

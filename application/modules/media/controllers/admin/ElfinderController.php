@@ -1,9 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ElfinderController extends MY_Controller {
-
-	protected $templateData = array();
+class ElfinderController extends Backend_Controller {
 
 	protected $image = array(
 		'filePath' => 'assets/uploads/images/',
@@ -20,30 +18,20 @@ class ElfinderController extends MY_Controller {
 		'allowedTypes' => array()
 	);
 
+	public function setModulePath()
+	{
+		return "media/backend/";
+	}
+
 	public function __construct()
 	{		
-		$this->templateData['pageTitle'] = "";
+		parent::__construct();
+		
 		$this->templateData['pageTitleSuffix'] = "File Manager";
 	}
 
 	public function init($config)
 	{
-		if(!$this->session->userId){
-			// configure referral link
-			$requestUrl = str_replace( 
-				array(
-					$this->config->item('url_suffix'), 
-					site_url(), 
-					'auth/login'
-				), 
-				'', 
-				current_url()
-			);
-
-			$this->session->set_tempdata('requestUrl', $requestUrl, 300);
-			redirect('auth/login');
-		}
-
 		$this->load->helper('path');
 		
 		// configure options
@@ -93,7 +81,7 @@ class ElfinderController extends MY_Controller {
 	{
 		$this->templateData['mode'] = 'image';
 		$this->templateData['pageTitle'] = 'Image';
-		$this->templateData['content'] = 'elfinder/elfinder';
+		$this->templateData['content'] = 'elfinder/elfinder_type';
 		return $this->load->view('backend/elfinder_layout', $this->templateData);
 	}
 
@@ -101,7 +89,7 @@ class ElfinderController extends MY_Controller {
 	{
 		$this->templateData['mode'] = 'audio';
 		$this->templateData['pageTitle'] = 'Audio';
-		$this->templateData['content'] = 'elfinder/elfinder';
+		$this->templateData['content'] = 'elfinder/elfinder_type';
 		return $this->load->view('backend/elfinder_layout', $this->templateData);
 	}
 
@@ -109,9 +97,7 @@ class ElfinderController extends MY_Controller {
 	{
 		$this->templateData['mode'] = 'video';
 		$this->templateData['pageTitle'] = 'Video';
-		$this->templateData['content'] = 'elfinder/elfinder';
+		$this->templateData['content'] = 'elfinder/elfinder_type';
 		return $this->load->view('backend/elfinder_layout', $this->templateData);
 	}
-
-
 }

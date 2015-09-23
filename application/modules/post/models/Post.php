@@ -96,11 +96,21 @@ class Post
     **/
     protected $tags;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="media\models\Media")
+    * @ORM\JoinTable(name="mag_post_media",
+    *   joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+    *   inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
+    * )
+    **/
+    protected $medias;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId()
@@ -250,6 +260,21 @@ class Post
     public function setTags($tags)
     {
         $this->tags = $tags;
+    }
+
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(\media\models\Media $media)
+    {
+        $this->medias[] = $media;
+    }
+
+    public function setMedias($medias)
+    {
+        $this->medias = $medias;
     }
 
     // public function getFeaturedImage()

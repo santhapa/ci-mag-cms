@@ -142,11 +142,9 @@
     });
 </script>
 
-<?php  ?>
-
 <script type="text/javascript">
     CKEDITOR.replace('content-editor',{
-        filebrowserImageBrowseUrl : '<?php echo site_url("elfinder/ckeditor"); ?>'
+        filebrowserImageBrowseUrl : '<?php echo site_url("admin/media/elfinder/ckeditor"); ?>'
     });
 </script>
 
@@ -167,29 +165,29 @@
         $('#elfinder_browse').on("click",function() {
             var input = $(this).prev('input');
             var id = $(input).attr('id');
-            var url = "<?php echo site_url('elfinder/image'); ?>";
+            var url = "<?php echo site_url('admin/media/elfinder/image'); ?>";
             var param = "id="+id;
             switch(postType)
             {
                 case 'general':{
-                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    url = "<?php echo site_url('admin/media/elfinder/image'); ?>";
                     break;
                 }
                 case 'audio':{
-                    url = "<?php echo site_url('elfinder/audio'); ?>";
+                    url = "<?php echo site_url('admin/media/elfinder/audio'); ?>";
                     break;
                 }
                 case 'video':{
-                    url = "<?php echo site_url('elfinder/video'); ?>";
+                    url = "<?php echo site_url('admin/media/elfinder/video'); ?>";
                     break;
                 }
                 case 'gallery':{
-                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    url = "<?php echo site_url('admin/media/elfinder/image'); ?>";
                     param = "id="+id+"&multiple=true";
                     break;
                 }
                 default:{
-                    url = "<?php echo site_url('elfinder/image'); ?>";
+                    url = "<?php echo site_url('admin/media/elfinder/image'); ?>";
                     break;
                 }
             }

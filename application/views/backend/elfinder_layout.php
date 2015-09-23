@@ -19,7 +19,8 @@
 </head>
 <body>
 
-	<?php $this->load->view('backend/'.$content); ?>
+	<?php //$this->load->view('backend/'.$content); ?>
+	<?php $this->load->view($modulePath.$content);  ?>
 
 </body>
 </html>

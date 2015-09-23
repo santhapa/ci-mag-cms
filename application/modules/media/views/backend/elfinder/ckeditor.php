@@ -12,7 +12,7 @@
         var funcNum = getUrlParam('CKEditorFuncNum');
 
         var elf = $('#elfinder').elfinder({
-            url : '<?php echo site_url("elfinder/init/".$mode) ?>',
+            url : '<?php echo site_url("admin/media/elfinder/init/".$mode) ?>',
             getFileCallback : function(file) {
                 window.opener.CKEDITOR.tools.callFunction(funcNum, file.url);
                 window.close();

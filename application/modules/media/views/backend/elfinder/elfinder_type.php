@@ -4,7 +4,7 @@
         var selectMultiple = getURLParameter('multiple')? true : false;
 
         var $f = $('.elfinder').elfinder({
-            url : '<?php echo site_url("elfinder/init/".$mode); ?>',
+            url : '<?php echo site_url("admin/media/elfinder/init/".$mode); ?>',
             commandsOptions : {
                 // configure value for "getFileCallback" used for editor integration
                 getfile : {
