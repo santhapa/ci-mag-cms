@@ -10,6 +10,7 @@ class PostController extends Backend_Controller {
 
 		$this->load->library('form_validation');
 		$this->load->helper('post/post');
+		$this->load->helper('media/media');
 		
 		$this->breadcrumbs->push('Post', site_url('admin/post'));
 	}
@@ -95,6 +96,25 @@ class PostController extends Backend_Controller {
 						}
 					}
 
+					if($this->input->post('mediaSrc'))
+					{
+						$sources = explode(',', $this->input->post('mediaSrc'));
+						$dbMedia = getAllMediaSources();
+						$mediaManager = $this->container->get('media.media_manager');
+						foreach ($sources as $src) {
+							if(!in_array($src, $dbMedia) && $src)
+							{
+								$newMedia = $mediaManager->createMedia();
+								$newMedia->setSource($src);
+								$mediaManager->updateMedia($newMedia);
+								$media = $newMedia;
+							}else{
+								$media = $mediaManager->getMediaBySource($src);
+							}
+							if($src)	$post->addMedia($media);
+						}
+					}
+
 					if($this->input->post('btnSave'))
 					{
 						$post->saveToDraft();
@@ -135,6 +155,10 @@ class PostController extends Backend_Controller {
 			$postManager = $this->container->get('post.post_manager');
 			$post = $postManager->getPostBySlug($slug);
 
+			if(!$post) throw new Exception("Post not found.", 1);
+
+			if($post->isTrashed()) throw new Exception("Post has been deleted already.", 1);
+
 			$oTags = $post->getTags();
 			$oldTags = '';
 
@@ -143,9 +167,11 @@ class PostController extends Backend_Controller {
 				if($i !=count($oTags)) $oldTags.=',';
 			}
 
-			if(!$post) throw new Exception("Post not found.", 1);
-
-			if($post->isTrashed()) throw new Exception("Post has been deleted already.", 1);			
+			$mediaSource = '';
+			foreach ($post->getMedias() as $i => $media) {
+				$separator = ($i==0 || $i==count($post->getMedias()))?'':',';
+				$mediaSource .= $separator.$media->getSource();
+			}
 
 			if($this->input->post())
 			{
@@ -197,6 +223,29 @@ class PostController extends Backend_Controller {
 							if($tag)	$postTags[] = $tag;
 						}
 						$post->setTags($postTags);
+					}else{
+						$post->setTags(array());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+					}
+
+					if($this->input->post('mediaSrc') != $mediaSource)
+					{
+						$sources = explode(',', $this->input->post('mediaSrc'));
+						$dbMedia = getAllMediaSources();
+						$postMedias = array();
+						$mediaManager = $this->container->get('media.media_manager');
+						foreach ($sources as $src) {
+							if(!in_array($src, $dbMedia) && $src)
+							{
+								$newMedia = $mediaManager->createMedia();
+								$newMedia->setSource($src);
+								$mediaManager->updateMedia($newMedia);
+								$media = $newMedia;
+							}else{
+								$media = $mediaManager->getMediaBySource($src);
+							}
+							if($src)	$postMedias[] = $media;
+						}
+						$post->setMedias($postMedias);
 					}
 
 					if($this->input->post('btnPublish') && $post->isDraft())
@@ -214,6 +263,7 @@ class PostController extends Backend_Controller {
 			$this->breadcrumbs->push('Edit', current_url());
 			$this->templateData['postTypes'] = $postTypes;
 			$this->templateData['post'] = $post;
+			$this->templateData['mediaSource'] = $mediaSource;
 			$this->templateData['oldTags'] = $oldTags;
 			$this->templateData['categorys'] = $categorys;
 			$this->templateData['pageTitle'] = 'Edit Post';

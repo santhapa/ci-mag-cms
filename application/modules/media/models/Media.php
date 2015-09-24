@@ -20,8 +20,8 @@ class Media
     private $id;
 
     /**
-    * @ORM\Column(type="string", length=5000, nullable=false)
-    */
+    * @ORM\Column(type="string", name="`source`", nullable=false, unique=true)
+    */  
     protected $source;
   
     public function getId()

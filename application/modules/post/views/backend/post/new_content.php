@@ -45,8 +45,9 @@
                     <div class="box-body">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input id="meta" type="hidden" name="meta" class="form-control" value="<?php echo set_value('title'); ?>"/>
+                                <input id="mediaSrc" type="hidden" name="mediaSrc" class="form-control" value="<?php echo set_value('mediaSrc'); ?>"/>
                                 <button id="elfinder_browse" class="btn btn-primary">Browse Server</button>
+                                <span class="btn removeBtn" style="color: red; display:none;"><u>Remove</u></span>
                             </div>                            
                         </div>
                         <div id="preview"></div>
@@ -151,12 +152,25 @@
 <script type="text/javascript">
     
     $(function(){
-        postType =  'general';
         prevSrc = {general:'', audio:'', video:'', gallery:''};
+        var selectedPost = $('input[name=postType].checked').val();
+        
+        postType = (selectedPost) ? $('input[name=postType].checked').attr('id') : 'general';
+        prevSrc[postType] = "<?php echo set_value('mediaSrc')?: ''; ?>";
+
+        if(prevSrc[postType]) $('.removeBtn').show();
+
+        if(postType && prevSrc[postType]) preview(postType, prevSrc[postType]);
 
         $('input[name=postType]').change(function(){
             postType = $(this).attr('id');
-            $('input#meta').val(prevSrc[postType]);
+            $('input#mediaSrc').val(prevSrc[postType]);
+
+            if(prevSrc[postType]){
+                $('.removeBtn').show();
+            }else{
+                $('.removeBtn').hide();
+            }
 
             preview(postType, prevSrc[postType]);
         });
@@ -196,12 +210,19 @@
             
             $('input#'+id).on('change', function(){
                 var src = $(this).val();
+                if(src) $('.removeBtn').show();
+
                 prevSrc[postType] = src;
 
                 preview(postType, src);
             });
 
             return false;
+        });
+
+        $("body").on("click",".removeBtn",function(event){
+            prevSrc[postType] = '';
+            removeMedia();
         });
     });
 
@@ -233,5 +254,14 @@
 
     function setValue(value, element_id) {
         $((element_id ? 'input#'+ element_id : '')).val(value).change();
+    }
+
+    function removeMedia()
+    {
+        $('#preview').html('');
+        $('input#mediaSrc').val('');
+        $('.removeBtn').hide();
+
+        return false;
     }
 </script>

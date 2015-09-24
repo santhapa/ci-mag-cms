@@ -1,15 +1,15 @@
 <?php 
 
-function getAllMedia()
+function getAllMediaSources()
 {
 	$CI = &get_instance();
 	$mediaManager = $CI->container->get('media.media_manager');
 
 	$medias = $mediaManager->getMedias();
-	$tagArray = array();
-	foreach ($medias as $tag) {
-		$tagArray[] = $tag->getName();
+	$mediaArray = array();
+	foreach ($medias as $md) {
+		$mediaArray[] = $md->getSource();
 	}
 
-	return $tagArray;
+	return $mediaArray;
 }

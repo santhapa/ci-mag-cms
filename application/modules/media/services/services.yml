@@ -1,0 +1,4 @@
+services:
+    media.media_manager:
+        class: media\manager\MediaManager
+        arguments: ["%entityManager%"]
