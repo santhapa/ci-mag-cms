@@ -33,6 +33,22 @@
                 </ul>
             </li>
             <?php endif; ?>
+
+            <?php if(\App::isGranted('viewPost')): ?>
+            <li class="treeview">
+                <a href="javascript.void(0)">
+                    <i class="fa fa-user"></i> <span>Posts</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if(\App::isGranted('addPost')): ?>
+                    <li><a href="<?php echo site_url('admin/post/add');?>"><i class="fa fa-circle-o"></i> Add Post</a></li>
+                    <?php endif; ?>
+                    <?php if(\App::isGranted('viewPost')): ?>
+                    <li><a href="<?php echo site_url('admin/post');?>"><i class="fa fa-circle-o"></i> View All</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+            <?php endif; ?>
         </ul>
     </section>
     <!-- /.sidebar -->
