@@ -145,6 +145,11 @@ class User
     protected $posts;
 
     /**
+    * @ORM\OneToMany(targetEntity="page\models\Page", mappedBy="author", cascade={"persist"})
+    */
+    protected $pages;
+
+    /**
     *@ORM\OneToMany(targetEntity="comment\models\Comment", mappedBy="user")
     */
     protected $comments;
@@ -153,6 +158,7 @@ class User
     {
         parent::__construct();
         $this->posts = new ArrayCollection();
+        $this->pages = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -399,6 +405,21 @@ class User
     public function addPost(\post\models\Post $post)
     {
         $this->posts[] = $post;
+    }
+
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    public function addPage(\page\models\Page $page)
+    {
+        $this->pages[] = $page;
+    }
+
+    public function getPages()
+    {
+        return $this->pages;
     }
 
     public function addComment(\comment\models\Comment $comment)

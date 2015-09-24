@@ -1,0 +1,4 @@
+- {name: viewPage, description: "View pages." }
+- {name: addPage, description: "Create new page." }
+- {name: editPage, description: "Edit page content." }
+- {name: deletePage, description: "Delete page temporarily or permanently." }

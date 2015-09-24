@@ -1,5 +1,5 @@
 <?php
-namespace post\models;
+namespace page\models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,17 +7,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
 * @ORM\Entity
-* @ORM\Table(name="mag_posts")
+* @ORM\Table(name="mag_pages")
 */
-class Post
+class Page
 {
     const STATUS_DRAFT = 1;
-    const STATUS_ACTIVE = 2;
+    const STATUS_PUBLISH = 2;
     const STATUS_TRASH = 3;
 
     public static $statusTypes = array(
         self::STATUS_DRAFT => 'On Draft',
-        self::STATUS_ACTIVE => 'Published',
+        self::STATUS_PUBLISH => 'Published',
         self::STATUS_TRASH => 'Trashed'
     );
     
@@ -51,10 +51,10 @@ class Post
     protected $updatedAt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="PostType", inversedBy="posts", cascade={"persist"})
-    * @ORM\JoinColumn(name="post_type_id", referencedColumnName="id", onDelete="SET NULL")
+    * @ORM\ManyToOne(targetEntity="media\models\Media", cascade={"persist"})
+    * @ORM\JoinColumn(name="`featured_image`", referencedColumnName="id", onDelete="SET NULL")
     */
-    protected $postType;
+    protected $featuredImage;
 
     /**
     * @ORM\Column(type="integer", name="`status`", nullable=false)
@@ -68,38 +68,21 @@ class Post
     */
     protected $slug;
 
-    // *
-    // * @ORM\Column(type="string", length=255, name="featured_image")
-    
-    // protected $featuredImage;
-
     /**
-    *@ORM\ManyToOne(targetEntity="user\models\User", inversedBy="posts")
+    *@ORM\ManyToOne(targetEntity="user\models\User", inversedBy="pages")
     *@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
     */
     protected $author;
 
     /**
-    *@ORM\OneToMany(targetEntity="comment\models\Comment", mappedBy="post")
+    *@ORM\OneToMany(targetEntity="comment\models\Comment", mappedBy="page")
     */
     protected $comments;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts" , cascade={"persist"})
-    * @ORM\JoinTable(name="mag_post_category")
-    **/
-    protected $categories;
-
-    /**
-    * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"})
-    * @ORM\JoinTable(name="mag_post_tag")
-    **/
-    protected $tags;
-
-    /**
     * @ORM\ManyToMany(targetEntity="media\models\Media")
-    * @ORM\JoinTable(name="mag_post_media",
-    *   joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+    * @ORM\JoinTable(name="mag_page_media",
+    *   joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
     *   inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
     * )
     **/
@@ -108,8 +91,6 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->categories = new ArrayCollection();
-        $this->tags = new ArrayCollection();
         $this->medias = new ArrayCollection();
     }
 
@@ -168,14 +149,14 @@ class Post
         $this->status = self::STATUS_TRASH;
     }
 
-    public function activate()
+    public function publish()
     {
-        $this->status = self::STATUS_ACTIVE;
+        $this->status = self::STATUS_PUBLISH;
     }
 
-    public function isActive()
+    public function isPublished()
     {
-        return ($this->status == self::STATUS_ACTIVE) ? true : false;
+        return ($this->status == self::STATUS_PUBLISH) ? true : false;
     }
 
     public function isTrashed()
@@ -188,14 +169,14 @@ class Post
         return ($this->status == self::STATUS_DRAFT) ? true : false;
     }
 
-    public function setPostType(PostType $pt)
+    public function setFeaturedImage(\media\models\Media $media)
     {
-        $this->postType = $pt;
+        $this->featuredImage = $media;
     }
 
-    public function getPostType()
+    public function getFeaturedImage()
     {
-        return $this->postType;
+        return $this->featuredImage ? $this->featuredImage->getSource() : '';
     }
 
     public function setSlug($slug)
@@ -210,7 +191,7 @@ class Post
 
     public function setAuthor(\user\models\User $author)
     {
-        $author->addPost($this);
+        $author->addPage($this);
         $this->author = $author;
     }
 
@@ -221,45 +202,13 @@ class Post
 
     public function addComment(\comment\models\Comment $comment)
     {
-        // $comment->addPost($this);
+        // $comment->setPage($this);
         $this->comments[] = $comment;
     }
 
     public function getComments()
     {
         return $this->comments;
-    }        
-
-    public function addCategory(Category $cat)
-    {
-        $cat->addPost($this);
-        $this->categories[] = $cat;
-    }
-
-    public function setCategorys($cats)
-    {
-        $this->categories = $cats;
-    }
-
-    public function getCategorys()
-    {
-        return $this->categories;
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    public function addTag(Tag $tag)
-    {
-        $tag->addPost($this);
-        $this->tags[] = $tag;
-    }
-
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
     }
 
     public function getMedias()
@@ -276,13 +225,4 @@ class Post
     {
         $this->medias = $medias;
     }
-
-    // public function getFeaturedImage()
-    // {
-    //     return $this->featuredImage;
-    // }
-    // public function setFeaturedImage($path)
-    // {
-    //     $this->featuredImage = $path;
-    // }
 }

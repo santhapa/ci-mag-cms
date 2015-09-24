@@ -1,0 +1,7 @@
+services:
+    page.page_manager:
+        class: page\manager\PageManager
+        arguments: ["%entityManager%"]
+
+    page.rule_manager:
+        class: page\manager\ValidationRuleManager

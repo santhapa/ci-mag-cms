@@ -54,6 +54,12 @@ class Comment
 	**/
 	protected $post;
 
+    /**
+    *@ORM\ManyToOne(targetEntity="page\models\Page", inversedBy="comments")
+    *@ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+    **/
+    protected $page;
+
 	/**
 	*@ORM\ManyToOne(targetEntity="user\models\User", inversedBy="comments")
 	*@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
@@ -127,15 +133,25 @@ class Comment
 
     public function setPost(\post\models\Post $post)
     {
-        // $post->addComment($this);
+        $post->addComment($this);
         $this->post = $post;
     }
 
     public function getPost()
     {
         return $this->post;
-    }		
+    }
 
+    public function setPage(\page\models\Page $page)
+    {
+        $page->addComment($this);
+        $this->page = $page;
+    }
+
+    public function getPage()
+    {
+        return $this->page;
+    }
 }
 
 ?>
