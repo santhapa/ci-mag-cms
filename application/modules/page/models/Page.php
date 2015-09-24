@@ -37,6 +37,11 @@ class Page
 	* @ORM\Column(type="text", name="`content`", nullable=false)
 	*/
     protected $content;
+
+    /**
+    * @ORM\Column(type="boolean", name="`show_comments`", nullable=false)
+    */
+    protected $showComments;
     
     /**
     * @Gedmo\Timestampable(on="create")
@@ -51,12 +56,6 @@ class Page
     protected $updatedAt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="media\models\Media", cascade={"persist"})
-    * @ORM\JoinColumn(name="`featured_image`", referencedColumnName="id", onDelete="SET NULL")
-    */
-    protected $featuredImage;
-
-    /**
     * @ORM\Column(type="integer", name="`status`", nullable=false)
     **/
     protected $status = 2;
@@ -69,6 +68,12 @@ class Page
     protected $slug;
 
     /**
+    * @ORM\ManyToOne(targetEntity="media\models\Media")
+    * @ORM\JoinColumn(name="`featured_image`", referencedColumnName="id", onDelete="SET NULL")
+    */
+    protected $featuredImage;
+
+    /**
     *@ORM\ManyToOne(targetEntity="user\models\User", inversedBy="pages")
     *@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
     */
@@ -79,19 +84,9 @@ class Page
     */
     protected $comments;
 
-    /**
-    * @ORM\ManyToMany(targetEntity="media\models\Media")
-    * @ORM\JoinTable(name="mag_page_media",
-    *   joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-    *   inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
-    * )
-    **/
-    protected $medias;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->medias = new ArrayCollection();
     }
 
     public function getId()
@@ -117,6 +112,21 @@ class Page
     public function getContent()
     {
         return  $this->content;
+    }
+
+    public function setShowComments($bool){
+        if($bool)
+        {
+            $this->showComments = true;
+        }else{
+             $this->showComments = false;
+        }
+        
+    }
+
+    public function getShowComments()
+    {
+        return $this->showComments;
     }
 
     public function getCreatedAt()
@@ -209,20 +219,5 @@ class Page
     public function getComments()
     {
         return $this->comments;
-    }
-
-    public function getMedias()
-    {
-        return $this->medias;
-    }
-
-    public function addMedia(\media\models\Media $media)
-    {
-        $this->medias[] = $media;
-    }
-
-    public function setMedias($medias)
-    {
-        $this->medias = $medias;
     }
 }

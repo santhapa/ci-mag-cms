@@ -1,6 +1,6 @@
 <?php
 
-namespace post\manager;
+namespace page\manager;
 
 class ValidationRuleManager{
 

@@ -37,11 +37,7 @@ class PageController extends Backend_Controller {
 		if(!\App::isGranted('addPage')) redirect('admin/dashboard');
 
 		try {
-			// get page types and categories from helper
-			$pageTypes = getPageTypes();
-			$categorys = getCategorys();
-
-			if($this->input->page())
+			if($this->input->post())
 			{
 				$pageManager = $this->container->get('page.page_manager');
 				$ruleManager = $this->container->get('page.rule_manager');
@@ -51,53 +47,29 @@ class PageController extends Backend_Controller {
 
 				if($this->form_validation->run($this))
 				{
-					$page->setTitle($this->input->page('title'));
-					$page->setContent($this->input->page('content'));
+					$page->setTitle($this->input->post('title'));
+					$page->setContent($this->input->post('content'));
 					$page->setAuthor(\App::user());
+					$page->setShowComments($this->input->post('showComments'));
 
-					$pageTypeManager = $this->container->get('page.page_type_manager');
-					if($this->input->page('pageType'))
+					if($src = $this->input->post('featuredImage'))
 					{
-						$pageType = $pageTypeManager->getPageTypeById($this->input->page('pageType'));
-					}else{
-						$pageType = defaultPageType();
-					}
-					$page->setPageType($pageType);
-
-					$categoryManager = $this->container->get('page.category_manager');
-					if($this->input->page('category')){
-						foreach ($this->input->page('category') as $id) {
-							$cat = $categoryManager->getCategoryById($id);
-							if($cat)	$page->addCategory($cat);
+						$mediaManager = $this->container->get('media.media_manager');
+						$media = $media = $mediaManager->getMediaBySource($src);
+						if(!$media)
+						{
+							$newMedia = $mediaManager->createMedia();
+							$newMedia->setSource($src);
+							$mediaManager->updateMedia($newMedia);
+							$media = $newMedia;
 						}
-					}else{
-						$cat = defaultCategory();
-						$page->addCategory($cat);
+						$page->setFeaturedImage($media);
 					}
 
-					if($this->input->page('tags'))
-					{
-						$tags = explode(',', $this->input->page('tags'));
-						$dbTags = getAllTags();
-						$tagManager = $this->container->get('page.tag_manager');
-						foreach ($tags as $tag) {
-							if(!in_array($tag, $dbTags) && $tag)
-							{
-								$newTag = $tagManager->createTag();
-								$newTag->setName($tag);
-								$tagManager->updateTag($newTag);
-								$tag = $newTag;
-							}else{
-								$tag = $tagManager->getTagByName($tag);
-							}
-							if($tag)	$page->addTag($tag);
-						}
-					}
-
-					if($this->input->page('btnSave'))
+					if($this->input->post('btnSave'))
 					{
 						$page->saveToDraft();
-					}elseif($this->input->page('btnPublish')){
+					}elseif($this->input->post('btnPublish')){
 						$page->activate();
 					}
 
@@ -109,8 +81,6 @@ class PageController extends Backend_Controller {
 			}
 
 			$this->breadcrumbs->push('New', current_url());
-			$this->templateData['pageTypes'] = $pageTypes;
-			$this->templateData['categorys'] = $categorys;
 			$this->templateData['pageTitle'] = 'Add Page';
 			$this->templateData['content'] = 'page/new';
 			$this->load->view('backend/main_layout', $this->templateData);
@@ -125,82 +95,46 @@ class PageController extends Backend_Controller {
 		if(!\App::isGranted('editPage')) redirect('admin/dashboard');
 
 		try {
-			// get page types and categories from helper
-			$pageTypes = getPageTypes();
-			$categorys = getCategorys();
-
 			if(!$slug) throw new Exception("Error processing request.", 1);
 
 			$pageManager = $this->container->get('page.page_manager');
 			$page = $pageManager->getPageBySlug($slug);
 
-			$oTags = $page->getTags();
-			$oldTags = '';
-
-			foreach ($oTags as $i=>$tag) {
-				$oldTags .= $tag->getName();
-				if($i !=count($oTags)) $oldTags.=',';
-			}
-
 			if(!$page) throw new Exception("Page not found.", 1);
 
 			if($page->isTrashed()) throw new Exception("Page has been deleted already.", 1);			
 
-			if($this->input->page())
+			if($this->input->post())
 			{
 				$ruleManager = $this->container->get('page.rule_manager');
 				$this->form_validation->set_rules($ruleManager->getRules(array('title')));
 
 				if($this->form_validation->run($this))
 				{
-					$page->setTitle($this->input->page('title'));
-					$page->setContent($this->input->page('content'));
+					$page->setTitle($this->input->post('title'));
+					$page->setContent($this->input->post('content'));
+					$page->setAuthor(\App::user());
+					$page->setShowComments($this->input->post('showComments'));
 
-					$pageTypeManager = $this->container->get('page.page_type_manager');
-					if($this->input->page('pageType'))
+					if($src = $this->input->post('featuredImage'))
 					{
-						$pageType = $pageTypeManager->getPageTypeById($this->input->page('pageType'));
-					}else{
-						$pageType = defaultPageType();
-					}
-					$page->setPageType($pageType);
-
-					$categoryManager = $this->container->get('page.category_manager');
-					$cats = array();
-					if($this->input->page('category')){						
-						foreach ($this->input->page('category') as $id) {
-							$cat = $categoryManager->getCategoryById($id);
-							$cats[] = $cat;
+						$mediaManager = $this->container->get('media.media_manager');
+						$media = $media = $mediaManager->getMediaBySource($src);
+						if(!$media && $src)
+						{
+							$newMedia = $mediaManager->createMedia();
+							$newMedia->setSource($src);
+							$mediaManager->updateMedia($newMedia);
+							$media = $newMedia;
 						}
+						$page->setFeaturedImage($media);
 					}else{
-						$cats[] = defaultCategory();
-					}
-					$page->setCategorys($cats);
-
-					if($this->input->page('tags'))
-					{
-						$tags = explode(',', $this->input->page('tags'));
-						$dbTags = getAllTags();
-						$pageTags = array();
-						$tagManager = $this->container->get('page.tag_manager');
-						foreach ($tags as $tag) {
-							if(!in_array($tag, $dbTags) && $tag)
-							{
-								$newTag = $tagManager->createTag();
-								$newTag->setName($tag);
-								$tagManager->updateTag($newTag);
-								$tag = $newTag;
-							}else{
-								$tag = $tagManager->getTagByName($tag);
-							}
-							if($tag)	$pageTags[] = $tag;
-						}
-						$page->setTags($pageTags);
+						$page->setFeaturedImage(null);
 					}
 
-					if($this->input->page('btnPublish') && $page->isDraft())
+					if($this->input->post('btnPublish') && $page->isDraft())
 					{
-						$page->activate();
+						$page->publish();
 					}
 
 					$pageManager->updatePage($page);
@@ -211,10 +145,7 @@ class PageController extends Backend_Controller {
 			}
 
 			$this->breadcrumbs->push('Edit', current_url());
-			$this->templateData['pageTypes'] = $pageTypes;
 			$this->templateData['page'] = $page;
-			$this->templateData['oldTags'] = $oldTags;
-			$this->templateData['categorys'] = $categorys;
 			$this->templateData['pageTitle'] = 'Edit Page';
 			$this->templateData['content'] = 'page/edit';
 			$this->load->view('backend/main_layout', $this->templateData);
@@ -238,7 +169,7 @@ class PageController extends Backend_Controller {
 
 			if(!$page->isTrashed()) throw new Exception("Page doesnot require restoring.", 1);			
 
-			$page->activate();
+			$page->publish();
 			$pageManager->updatePage($page);
 
 			$this->session->setFlashMessage('feedback', "Page ({$page->getTitle()}) has been restored successfully.", 'success');
@@ -262,10 +193,10 @@ class PageController extends Backend_Controller {
 
 			if(!$page) throw new Exception("Page not found.", 1);
 
-			if($page->isActive()) throw new Exception("Page has been published already.", 1);			
+			if($page->isPublished()) throw new Exception("Page has been published already.", 1);			
 			if($page->isTrashed()) throw new Exception("Page cannot be published.", 1);			
 
-			$page->activate();
+			$page->publish();
 			$pageManager->updatePage($page);
 
 			$this->session->setFlashMessage('feedback', "Page ({$page->getTitle()}) has been published successfully.", 'success');

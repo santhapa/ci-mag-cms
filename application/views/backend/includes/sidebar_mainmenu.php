@@ -49,6 +49,22 @@
                 </ul>
             </li>
             <?php endif; ?>
+
+            <?php if(\App::isGranted('viewPage')): ?>
+            <li class="treeview">
+                <a href="javascript.void(0)">
+                    <i class="fa fa-user"></i> <span>Pages</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <?php if(\App::isGranted('addPage')): ?>
+                    <li><a href="<?php echo site_url('admin/page/add');?>"><i class="fa fa-circle-o"></i> Add Page</a></li>
+                    <?php endif; ?>
+                    <?php if(\App::isGranted('viewPage')): ?>
+                    <li><a href="<?php echo site_url('admin/page');?>"><i class="fa fa-circle-o"></i> View All</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+            <?php endif; ?>
         </ul>
     </section>
     <!-- /.sidebar -->

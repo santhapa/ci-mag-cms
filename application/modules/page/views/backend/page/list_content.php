@@ -35,7 +35,7 @@
 						<?php
 							switch($page->getStatus())
         					{
-        						case page\models\Page::STATUS_ACTIVE :{
+        						case page\models\Page::STATUS_PUBLISH :{
 									if(\App::isGranted('editPage')):
 	        						 	echo action_button('edit',site_url('admin/page/edit/'.$page->getSlug()) ,array('title'	=>	'Edit '.$page->getTitle() ))."&emsp;";
 			        				endif;
