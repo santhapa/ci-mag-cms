@@ -69,7 +69,6 @@ class Page
 
     /**
     * @ORM\ManyToOne(targetEntity="media\models\Media")
-    * @ORM\JoinColumn(name="`featured_image`", referencedColumnName="id", onDelete="SET NULL")
     */
     protected $featuredImage;
 
