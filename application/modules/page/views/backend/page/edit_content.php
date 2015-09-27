@@ -1,9 +1,9 @@
 <script src="<?php echo base_url()?>assets/templates/backend/plugins/ckeditor/ckeditor.js"></script>
 
 <style type="text/css">
-   /* label{
+    label{
         font-weight: normal;
-    }*/
+    }
 </style>
 
 <form class="form-horizontal validate" action="" method="post">
@@ -144,6 +144,7 @@
     function removeMedia()
     {
         $('#preview').html('');
+        $('input#featuredImage').val('');
         $('.removeBtn').hide();
 
         return false;
