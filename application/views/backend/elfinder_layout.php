@@ -13,9 +13,9 @@
 	<!-- jQuery UI 1.11.4 -->
 	<script src="<?php echo base_url()?>/bower_components/admin-lte/plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
 
-	<link href="<?php echo base_url()?>assets/templates/backend/plugins/elfinder/css/elfinder.min.css" rel="stylesheet" type="text/css" />
-	<script src="<?php echo base_url()?>assets/templates/backend/plugins/elfinder/js/elfinder.min.js"></script>
-	<link href="<?php echo base_url()?>assets/templates/backend/plugins/elfinder/css/theme.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url()?>components/elfinder/css/elfinder.min.css" rel="stylesheet" type="text/css" />
+	<script src="<?php echo base_url()?>components/elfinder/js/elfinder.min.js"></script>
+	<link href="<?php echo base_url()?>components/elfinder/css/theme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 

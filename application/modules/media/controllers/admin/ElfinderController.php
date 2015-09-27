@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// gets all elfinder class instances from composer
+
 class ElfinderController extends Backend_Controller {
 
 	protected $image = array(
@@ -66,7 +68,9 @@ class ElfinderController extends Backend_Controller {
 					) 
 				)
 			);
-		$this->load->library('ElfinderManager', $opts);
+
+		$connector = new elFinderConnector(new elFinder($opts));
+		$connector->run();
 	}
 
 	public function ckeditor()
