@@ -66,6 +66,25 @@
             </li>
             <?php endif; ?>
         </ul>
+
+
+        <?php 
+            $factory = new MenuFactory();
+            $menu = $factory->createItem('My menu', array('firstClass'=>"helo"));
+
+            $menu->addChild('Pages', array('uri' => 'javascript:void(0)'));
+            $menu['Pages']->addChild('Add Page', array('uri' => site_url('admin/page/add')));
+            $menu['Pages']->addChild('View All', array('uri' => site_url('admin/page')));
+
+
+            $menu->addChild('Posts', array('uri' => 'javascript:void(0)'));
+            $menu['Posts']->addChild('Add Post', array('uri' => site_url('admin/post/add')));
+            $menu['Posts']->addChild('View All', array('uri' => site_url('admin/post')));
+
+
+            $renderer = new MenuRenderer(new \Knp\Menu\Matcher\Matcher());
+            echo $renderer->render($menu, array('currentClass'=> 'active', 'firstClass'=>'', 'lastClass'=>'', 'branch_class'=>'treeview'));
+        ?>
     </section>
     <!-- /.sidebar -->
 </aside
