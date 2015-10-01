@@ -57,7 +57,9 @@ class MenuRenderer extends ListRenderer
         // $childrenClass[] = 'menu_level_'.$item->getLevel();
 
         $childrenAttributes = $item->getChildrenAttributes();
-        $childrenAttributes['class'] = implode(' ', $childrenClass);
+        // has been set implocitly here, can use ->setChildrenAttributes(array('class'=> 'treeview-menu')) while menu creating
+        $childrenAttributes['class'] = 'treeview-menu';
+        $childrenAttributes['class'] .= implode(' ', $childrenClass);
 
         $html .= $this->renderList($item, $childrenAttributes, $options);
 

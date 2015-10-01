@@ -75,7 +75,6 @@
 
             $menu->addChild('Pages')
                 ->setUri('javascript:void(0)')
-                ->setChildrenAttributes(array('class'=> 'treeview-menu'))
                 ->setIcon('user');
             $menu['Pages']->addChild('Add Page')
                 ->setUri(site_url('admin/page/add'))
@@ -86,7 +85,6 @@
 
             $menu->addChild('Posts')
                 ->setUri('javascript:void(0)')
-                ->setChildrenAttributes(array('class'=> 'treeview-menu'))
                 ->setIcon('users');;
             $menu['Posts']->addChild('Add Post')
                 ->setUri(site_url('admin/post/add'));
