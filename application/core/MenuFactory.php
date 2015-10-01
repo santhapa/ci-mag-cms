@@ -5,6 +5,8 @@ class MenuItem extends BaseMenuItem
 {
 	protected $icon;
 
+    protected $permissions = array();
+
 	public function getIcon()
 	{
 		return $this->icon ? 'fa fa-'.$this->icon : 'fa fa-circle-o';
@@ -15,6 +17,25 @@ class MenuItem extends BaseMenuItem
 		$this->icon = $icon;
 		return $this;
 	}
+
+    public function setPermissions($perms = array())
+    {
+        if(is_array($perms))
+        {
+            $this->permissions = $perms;
+            return $this;
+        }else{
+            $permission = array();
+            $permission[] = $perms;
+            $this->permissions = $permission;
+            return $this;
+        }
+    }
+
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
 }
 
 use Knp\Menu\MenuFactory as BaseMenuFactory;

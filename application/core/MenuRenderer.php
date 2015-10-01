@@ -5,49 +5,11 @@ use Knp\Menu\ItemInterface;
 
 class MenuRenderer extends ListRenderer
 {
-	protected function renderList(ItemInterface $item, array $attributes, array $options)
+    protected function renderItem(ItemInterface $item, array $options)
     {
-        /**
-         * Return an empty string if any of the following are true:
-         *   a) The menu has no children eligible to be displayed
-         *   b) The depth is 0
-         *   c) This menu item has been explicitly set to hide its children
-         */
-        if (!$item->hasChildren() || 0 === $options['depth'] || !$item->getDisplayChildren()) {
+        if(!\App::isGranted($item->getPermissions()))
             return '';
-        }
 
-        $html = $this->format('<ul '.$this->renderHtmlAttributes($attributes).'>', 'ul', $item->getLevel(), $options);
-        $html .= $this->renderChildren($item, $options);
-        $html .= $this->format('</ul>', 'ul', $item->getLevel(), $options);
-
-        echo "<pre>";
-        print_r($options);
-        echo "</pre>";
-        return $html;
-    }
-
-    protected function renderChildren(ItemInterface $item, array $options)
-    {
-        // render children with a depth - 1
-        if (null !== $options['depth']) {
-            $options['depth'] = $options['depth'] - 1;
-        }
-
-        if (null !== $options['matchingDepth'] && $options['matchingDepth'] > 0) {
-            $options['matchingDepth'] = $options['matchingDepth'] - 1;
-        }
-
-        $html = '';
-        foreach ($item->getChildren() as $child) {
-            $html .= $this->renderItem($child, $options);
-        }
-
-        return $html;
-    }
-
-     protected function renderItem(ItemInterface $item, array $options)
-    {
         // if we don't have access or this item is marked to not be shown
         if (!$item->isDisplayed()) {
             return '';
@@ -92,7 +54,7 @@ class MenuRenderer extends ListRenderer
 
         // renders the embedded ul
         $childrenClass = (array) $item->getChildrenAttribute('class');
-        $childrenClass[] = 'menu_level_'.$item->getLevel();
+        // $childrenClass[] = 'menu_level_'.$item->getLevel();
 
         $childrenAttributes = $item->getChildrenAttributes();
         $childrenAttributes['class'] = implode(' ', $childrenClass);
@@ -101,6 +63,25 @@ class MenuRenderer extends ListRenderer
 
         // closing li tag
         $html .= $this->format('</li>', 'li', $item->getLevel(), $options);
+
+        return $html;
+    }
+
+    protected function renderLabel(ItemInterface $item, array $options)
+    {
+        $html = '<i class="'.$item->getIcon().'"></i> ';
+        $html .= '<span>'.$item->getLabel().'</span>';
+
+        if($item->hasChildren())
+        {
+            $drop = false;
+            foreach ($item->getChildren() as $child) {
+                if(\App::isGranted($child->getPermissions()))
+                    $drop = true;
+            }
+            if($drop)
+                $html .= '<i class="fa fa-angle-left pull-right"></i>';
+        }
 
         return $html;
     }

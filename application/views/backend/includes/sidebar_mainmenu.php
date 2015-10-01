@@ -34,7 +34,7 @@
             </li>
             <?php endif; ?>
 
-            <?php if(\App::isGranted('viewPost')): ?>
+            <?php /* if(\App::isGranted('viewPost')): ?>
             <li class="treeview">
                 <a href="javascript.void(0)">
                     <i class="fa fa-user"></i> <span>Posts</span> <i class="fa fa-angle-left pull-right"></i>
@@ -64,22 +64,34 @@
                     <?php endif; ?>
                 </ul>
             </li>
-            <?php endif; ?>
+            <?php endif; */?>
         </ul>
 
 
         <?php 
             $factory = new MenuFactory();
-            $menu = $factory->createItem('My menu', array('firstClass'=>"helo"));
+            $menu = $factory->createItem('My menu');
+            $menu->setChildrenAttributes(array('class'=> 'sidebar-menu'));
 
-            $menu->addChild('Pages', array('uri' => 'javascript:void(0)'));
-            $menu['Pages']->addChild('Add Page', array('uri' => site_url('admin/page/add')));
-            $menu['Pages']->addChild('View All', array('uri' => site_url('admin/page')));
+            $menu->addChild('Pages')
+                ->setUri('javascript:void(0)')
+                ->setChildrenAttributes(array('class'=> 'treeview-menu'))
+                ->setIcon('user');
+            $menu['Pages']->addChild('Add Page')
+                ->setUri(site_url('admin/page/add'))
+                ->setPermissions('viewPage');
+            $menu['Pages']->addChild('View All')
+                ->setUri(site_url('admin/page'));
 
 
-            $menu->addChild('Posts', array('uri' => 'javascript:void(0)'));
-            $menu['Posts']->addChild('Add Post', array('uri' => site_url('admin/post/add')));
-            $menu['Posts']->addChild('View All', array('uri' => site_url('admin/post')));
+            $menu->addChild('Posts')
+                ->setUri('javascript:void(0)')
+                ->setChildrenAttributes(array('class'=> 'treeview-menu'))
+                ->setIcon('users');;
+            $menu['Posts']->addChild('Add Post')
+                ->setUri(site_url('admin/post/add'));
+            $menu['Posts']->addChild('View All')
+                ->setUri(site_url('admin/post'));
 
 
             $renderer = new MenuRenderer(new \Knp\Menu\Matcher\Matcher());
@@ -87,4 +99,4 @@
         ?>
     </section>
     <!-- /.sidebar -->
-</aside
+</aside>    
