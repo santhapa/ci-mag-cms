@@ -113,6 +113,4 @@ abstract class Backend_Controller extends MY_Controller {
         $renderer = new MenuRenderer(new \Knp\Menu\Matcher\Matcher());
         return $renderer->render($menu, array('currentClass'=> 'active', 'firstClass'=>'', 'lastClass'=>'', 'branch_class'=>'treeview'));
 	}
-
-
 }
