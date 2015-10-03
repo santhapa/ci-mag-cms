@@ -68,13 +68,13 @@ class App {
 
 	public static function isGranted($request, $or=true)
 	{
-		if(!$request) return true;
-
 		if(self::isSuperUser()) return true;
 
 		$user = self::user();
 
 		if(!$user) return false;
+
+		if(!$request) return false;
 
 		$permissions = $user->getGroup()->getPermissions();
 		$can = array();

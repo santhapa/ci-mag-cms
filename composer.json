@@ -15,7 +15,8 @@
 		"ircmaxell/password-compat": "1.0.4",
 		"swiftmailer/swiftmailer": "5.4.1",
 		"phpoffice/phpexcel": "1.8.1",
-		"studio-42/elfinder": "2.x-dev"
+		"studio-42/elfinder": "2.x-dev",
+		"knplabs/knp-menu": "2.1.0"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"
