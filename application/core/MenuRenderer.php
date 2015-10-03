@@ -69,6 +69,11 @@ class MenuRenderer extends ListRenderer
         return $html;
     }
 
+    protected function renderSpanElement(ItemInterface $item, array $options)
+    {
+        return sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getName());
+    }
+
     protected function renderLabel(ItemInterface $item, array $options)
     {
         $html = '<i class="'.$item->getIcon().'"></i> ';
