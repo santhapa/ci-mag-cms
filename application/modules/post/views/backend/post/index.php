@@ -15,21 +15,25 @@
 				<div class="box-body">
 					<div class="nav-tabs-custom">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#all" data-toggle="tab"><strong>All</strong></a></li>
+							<li class="active"><a href="#published" data-toggle="tab"><strong>Published</strong></a></li>
 							<li><a href="#draft" data-toggle="tab"><strong>Draft</strong></a></li>
 							<li><a href="#trash" data-toggle="tab"><strong>Trash</strong></a></li>
+							<li><a href="#all" data-toggle="tab"><strong>All</strong></a></li>
 						</ul>
 						<div class="tab-content">
-							<div class="tab-pane active" id="all">
-								<?php $this->load->view($modulePath.'post/list_content', array('posts'=>$posts, 'status' => null)); ?>
+							<div class="tab-pane active" id="published">
+								<?php $this->load->view($modulePath.'post/list_content', array('posts'=>$posts, 'status' => \post\models\Post::STATUS_ACTIVE)); ?>
 							</div><!-- /.tab-pane -->
-							
+
 							<div class="tab-pane" id="draft">
 								<?php $this->load->view($modulePath.'post/list_content', array('posts'=>$posts, 'status' => \post\models\Post::STATUS_DRAFT)); ?>
 							</div><!-- /.tab-pane -->
 
 							<div class="tab-pane" id="trash">
 								<?php $this->load->view($modulePath.'post/list_content', array('posts'=>$posts, 'status' => \post\models\Post::STATUS_TRASH)); ?>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="all">
+								<?php $this->load->view($modulePath.'post/list_content', array('posts'=>$posts, 'status' => null)); ?>
 							</div><!-- /.tab-pane -->
 						</div><!-- /.tab-content -->
 					</div>
