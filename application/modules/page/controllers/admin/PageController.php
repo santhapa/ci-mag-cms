@@ -24,8 +24,28 @@ class PageController extends Backend_Controller {
 
 		$pageManager = $this->container->get('page.page_manager');
 
-		$pages = $pageManager->getPages();
+		$perpage = 20;
+		$offset = $this->input->get('per_page') ? $this->input->get('per_page') :'';
 
+		$pages = $pageManager->paginatePages($offset,$perpage);
+ 		$total = count($pages);
+ 
+ 		if($total > $perpage)
+ 		{
+ 			$this->load->library('pagination');			
+ 			$config['base_url'] = base_url().'admin/post/index?';
+ 			$config['total_rows'] = $total;
+ 			$config['per_page'] = $perpage;
+			$config['uri_segment'] = 3;
+			$config['prev_link'] = 'Previous';
+ 			$config['next_link'] = 'Next';
+ 			$config['page_query_string'] = TRUE;
+			
+ 			$this->pagination->initialize($config);
+ 			$this->templateData['pagination'] = $this->pagination->create_links();
+ 		}
+
+		$this->templateData['offset'] = $offset;
 		$this->templateData['pages'] = $pages;
 		$this->templateData['pageTitle'] = 'Page';
 		$this->templateData['content'] = 'page/index';

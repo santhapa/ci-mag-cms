@@ -26,8 +26,28 @@ class PostController extends Backend_Controller {
 
 		$postManager = $this->container->get('post.post_manager');
 
-		$posts = $postManager->getPosts();
+		$perpage = 20;
+		$offset = $this->input->get('per_page') ? $this->input->get('per_page') :'';
 
+		$posts = $postManager->paginatePosts($offset,$perpage);
+ 		$total = count($posts);
+ 
+ 		if($total > $perpage)
+ 		{
+ 			$this->load->library('pagination');			
+ 			$config['base_url'] = base_url().'admin/post/index?';
+ 			$config['total_rows'] = $total;
+ 			$config['per_page'] = $perpage;
+			$config['uri_segment'] = 3;
+			$config['prev_link'] = 'Previous';
+ 			$config['next_link'] = 'Next';
+ 			$config['page_query_string'] = TRUE;
+			
+ 			$this->pagination->initialize($config);
+ 			$this->templateData['pagination'] = $this->pagination->create_links();
+ 		}
+
+		$this->templateData['offset'] = $offset;
 		$this->templateData['posts'] = $posts;
 		$this->templateData['pageTitle'] = 'Post';
 		$this->templateData['content'] = 'post/index';

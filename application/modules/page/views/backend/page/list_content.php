@@ -13,7 +13,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $count=0; foreach ($pages as $page): 
+			<?php 
+				$count=isset($offset)? $offset :0;
+				// $count=0; 
+				$list=0; 
+				foreach ($pages as $page): 
 
 				if($status == \page\models\Page::STATUS_TRASH)
 				{
@@ -31,6 +35,7 @@
 				}
 
 				$count++; 
+				$list++; 
 			?>
 		        <tr>
 					<td><?php echo $count; ?></td>
@@ -77,7 +82,7 @@
 				</tr>
 		    <?php endforeach; ?>
 
-		    <?php if($count == 0): ?>
+		    <?php if($list == 0): ?>
 		    <tr>
 		    	<td colspan="6" style="text-align: center;">
 		    		<strong>No Pages found!</strong>

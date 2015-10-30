@@ -5,6 +5,8 @@ namespace post\manager;
 use Doctrine\ORM\EntityManager;
 use post\models\Post;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 class PostManager{
 
 	private $em;
@@ -70,5 +72,22 @@ class PostManager{
 	public function getPostBySlug($slug)
 	{
 		return $this->em->getRepository("\post\models\Post")->findOneBy(array('slug'=>$slug));
+	}
+
+	public function paginatePosts($offset = null, $perpage=null){
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('p')
+			->from('post\models\Post', 'p')
+			->where('1=1');
+
+		if(!is_null($offset))
+			$qb->setFirstResult($offset);
+
+		if(!is_null($perpage))
+			$qb->setMaxResults($perpage);
+		$qb->orderBy('p.createdAt','desc');
+
+		$paginator = new Paginator($qb->getQuery(), $fetchJoin = true);
+		return $paginator;
 	}
 }

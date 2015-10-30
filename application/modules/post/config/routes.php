@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['admin/post'] = 'post/admin/post/index';
+$route['admin/post/index'] = 'post/admin/post/index';
 $route['admin/post/add'] = 'post/admin/post/add';
 $route['admin/post/edit/(.+)'] = 'post/admin/post/edit/$1';
 $route['admin/post/publish/(.+)'] = 'post/admin/post/publish/$1';

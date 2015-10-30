@@ -106,7 +106,9 @@ class UserManager{
 		$qb->select('u, g')
 			->from('user\models\User', 'u')
 			->leftJoin('u.group', 'g')
-			->where('1=1');
+			->where('1=1')
+			->andWhere('u.username != :superUser')
+			->setParameter('superUser', 'superadmin');
 
 		if(!is_null($offset))
 			$qb->setFirstResult($offset);

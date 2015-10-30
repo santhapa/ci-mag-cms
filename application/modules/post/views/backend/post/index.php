@@ -38,6 +38,11 @@
 						</div><!-- /.tab-content -->
 					</div>
 				</div>
+				<?php if(isset($pagination)):?>
+					<div class="box-footer clearfix">
+						<?php echo $pagination; ?>
+					</div>
+				<?php endif;?>
 			</div><!-- /.box -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->

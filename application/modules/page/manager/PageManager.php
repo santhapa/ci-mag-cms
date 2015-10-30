@@ -5,6 +5,8 @@ namespace page\manager;
 use Doctrine\ORM\EntityManager;
 use page\models\Page;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 class PageManager{
 
 	private $em;
@@ -70,5 +72,22 @@ class PageManager{
 	public function getPageBySlug($slug)
 	{
 		return $this->em->getRepository("\page\models\Page")->findOneBy(array('slug'=>$slug));
+	}
+
+	public function paginatePages($offset = null, $perpage=null){
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('p')
+			->from('page\models\Page', 'p')
+			->where('1=1');
+
+		if(!is_null($offset))
+			$qb->setFirstResult($offset);
+
+		if(!is_null($perpage))
+			$qb->setMaxResults($perpage);
+		$qb->orderBy('p.createdAt','desc');
+
+		$paginator = new Paginator($qb->getQuery(), $fetchJoin = true);
+		return $paginator;
 	}
 }

@@ -14,7 +14,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $count=0; foreach ($users as $user): 
+			<?php
+				$count=isset($offset)? $offset :0;
+				// $count=0; 
+				$list=0; 
+				foreach ($users as $user): 
 				if(\App::isSuperUser($user, false)) continue;
 
 				if($status == \user\models\User::STATUS_TRASH)
@@ -27,6 +31,7 @@
 					if($user->getStatus() == \user\models\User::STATUS_TRASH || $user->getStatus() == \user\models\User::STATUS_PENDING) continue;
 				}
 				$count++; 
+				$list++; 
 			?>
 		        <tr>
 					<td><?php echo $count; ?></td>
@@ -81,7 +86,7 @@
 				</tr>
 		    <?php endforeach; ?>
 
-		    <?php if($count == 0): ?>
+		    <?php if($list == 0): ?>
 		    <tr>
 		    	<td colspan="6" style="text-align: center;">
 		    		<strong>No Users found!</strong>

@@ -15,7 +15,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $count=0; foreach ($posts as $post): 
+			<?php 
+				$count=isset($offset)? $offset :0;
+				// $count=0; 
+				$list=0; 
+				foreach ($posts as $post): 
 
 				if($status == \post\models\Post::STATUS_TRASH)
 				{
@@ -32,6 +36,7 @@
 					if(!$post->isActive()) continue;
 				}
 				$count++; 
+				$list++; 
 			?>
 		        <tr>
 					<td><?php echo $count; ?></td>
@@ -87,7 +92,7 @@
 				</tr>
 		    <?php endforeach; ?>
 
-		    <?php if($count == 0): ?>
+		    <?php if($list == 0): ?>
 		    <tr>
 		    	<td colspan="6" style="text-align: center;">
 		    		<strong>No Posts found!</strong>

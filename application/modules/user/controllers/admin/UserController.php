@@ -25,8 +25,29 @@ class UserController extends Backend_Controller {
 		if(!\App::isGranted('viewUser')) redirect('admin/dashboard');
 
 		$userManager = $this->container->get('user.user_manager');
+		
+		$perpage = 1;
+		$offset = $this->input->get('per_page') ? $this->input->get('per_page') :'';
 
-		$users = $userManager->getUsers();
+		$users = $userManager->paginateUsers($offset,$perpage);
+ 		$total = count($users);
+ 
+ 		if($total > $perpage)
+ 		{
+ 			$this->load->library('pagination');			
+ 			$config['base_url'] = base_url().'admin/user/index?';
+ 			$config['total_rows'] = $total;
+ 			$config['per_page'] = $perpage;
+			$config['uri_segment'] = 3;
+			$config['prev_link'] = 'Previous';
+ 			$config['next_link'] = 'Next';
+ 			$config['page_query_string'] = TRUE;
+			
+ 			$this->pagination->initialize($config);
+ 			$this->templateData['pagination'] = $this->pagination->create_links();
+ 		}
+
+		$this->templateData['offset'] = $offset;
 		$this->templateData['users'] = $users;
 		$this->templateData['pageTitle'] = 'Users';
 		$this->templateData['content'] = 'user/index';
