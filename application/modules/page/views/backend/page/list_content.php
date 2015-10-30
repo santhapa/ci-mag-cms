@@ -6,7 +6,9 @@
 				<th>Title</th>
 				<th>Author</th>
 				<th>Posted On</th>
-				<th>Status</th>
+				<?php if($status == null): ?>
+					<th>Status</th>
+				<?php endif; ?>
 				<th width="15%">Action</th>
 			</tr>
 		</thead>
@@ -22,6 +24,12 @@
 				{
 					if(!$page->isDraft()) continue;
 				}
+
+				if($status == \page\models\Page::STATUS_PUBLISH)
+				{
+					if(!$page->isPublished()) continue;
+				}
+
 				$count++; 
 			?>
 		        <tr>
@@ -29,7 +37,11 @@
 					<td><?php echo $page->getTitle(); ?></td>
 					<td><?php echo $page->getAuthor()->getName()?:$page->getAuthor()->getUsername(); ?></td>
 					<td><?php echo $page->getCreatedAt()->format('F j, Y'); ?></td>
-					<td><?php echo \page\models\Page::$statusTypes[$page->getStatus()]; ?></td>
+
+					<?php if($status == null): ?>
+						<td><?php echo \page\models\Page::$statusTypes[$page->getStatus()]; ?></td>
+					<?php endif; ?>
+
 					<td>
 						<!-- <strong><em>This is you!</em></strong> -->
 						<?php
@@ -80,7 +92,9 @@
 				<th>Title</th>
 				<th>Author</th>
 				<th>Posted On</th>
-				<th>Status</th>
+				<?php if($status == null): ?>
+					<th>Status</th>
+				<?php endif; ?>
 				<th>Action</th>
 			</tr>
 		</tfoot>
