@@ -7,6 +7,9 @@
 				<th>Name</th>
 				<th>Email</th>
 				<th>Role</th>
+				<?php if($status == null): ?>
+					<th>Status</th>
+				<?php endif; ?>
 				<th width="15%">Action</th>
 			</tr>
 		</thead>
@@ -31,6 +34,9 @@
 					<td><?php echo ($user->getName())?: 'N/A'; ?></td>
 					<td><?php echo $user->getEmail(); ?></td>
 					<td><?php echo $user->getGroup()->getName(); ?></td>
+					<?php if($status == null): ?>
+						<td><?php echo user\models\User::$status_types[$user->getStatus()]; ?></td>
+					<?php endif; ?>
 					<td>
 						<!-- <strong><em>This is you!</em></strong> -->
 						<?php
@@ -91,6 +97,9 @@
 				<th>Name</th>
 				<th>Email</th>
 				<th>Role</th>
+				<?php if($status == null): ?>
+					<th>Status</th>
+				<?php endif; ?>
 				<th>Action</th>
 			</tr>
 		</tfoot>

@@ -15,21 +15,20 @@
 				<div class="box-body">
 					<div class="nav-tabs-custom">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#all" data-toggle="tab"><strong>All</strong></a></li>
-							<li><a href="#active" data-toggle="tab"><strong>Active</strong></a></li>
-							<li><a href="#trash" data-toggle="tab"><strong>Trash</strong></a></li>
+							<li class="active"><a href="#active" data-toggle="tab"><strong>Active</strong></a></li>
+							<li><a href="#trash" data-toggle="tab"><strong>Trash</strong></a></li>							
+							<li><a href="#all" data-toggle="tab"><strong>All</strong></a></li>
 						</ul>
-						<div class="tab-content">
-							<div class="tab-pane active" id="all">
-								<?php $this->load->view($modulePath.'user/list_content', array('users'=>$users, 'status' => null)); ?>
-							</div><!-- /.tab-pane -->
-							
-							<div class="tab-pane" id="active">
+						<div class="tab-content">							
+							<div class="tab-pane active" id="active">
 								<?php $this->load->view($modulePath.'user/list_content', array('users'=>$users, 'status' => \user\models\User::STATUS_ACTIVE)); ?>
 							</div><!-- /.tab-pane -->
 
 							<div class="tab-pane" id="trash">
 								<?php $this->load->view($modulePath.'user/list_content', array('users'=>$users, 'status' => \user\models\User::STATUS_TRASH)); ?>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="all">
+								<?php $this->load->view($modulePath.'user/list_content', array('users'=>$users, 'status' => null)); ?>
 							</div><!-- /.tab-pane -->
 						</div><!-- /.tab-content -->
 					</div>
